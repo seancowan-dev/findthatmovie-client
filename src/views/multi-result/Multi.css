@@ -1,0 +1,7 @@
+.results {
+    min-height: 40%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #22252c;
+}

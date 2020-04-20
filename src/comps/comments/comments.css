@@ -1,0 +1,30 @@
+.user-comments-container {
+    background-color: rgb(139, 139, 139);
+    padding: 5%;
+  }
+  
+  .comment-body {
+    border: 1px solid black;
+    height: 100px;
+  }
+  
+  .comment-submit {
+    float: right;
+  }
+  
+  .user-comment-form-body {
+    width: 100%;
+    height: 100px;
+  }
+  
+  .user-comment-form-title {
+    float: left;
+  }
+  
+  .user-comment-form-submit {
+    float: right;
+  }
+  
+  .user-comments-header {
+    background-color: rgb(157, 157, 157);
+  }

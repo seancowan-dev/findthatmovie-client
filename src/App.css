@@ -1,5 +1,27 @@
-.primary-container {
-    display: grid;
-    grid-template-columns: 20vw auto;
-    grid-template-rows: 15vh auto;
-  }
+.search-form-container {
+  width: 100%;
+  padding-top: 10px;
+  position: relative;
+  top: 0px;
+  --webkit-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+  --moz-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+  background-color: rgb(180, 180, 180);
+}
+
+.parallax {
+  height: 60vh;
+}
+
+.parallax::before {
+  content: " ";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  transform: translateZ(-1px) scale(1.5);
+  background-size: 100%;
+  z-index: -1;
+  background-image: url('https://seancowan-dev.github.io/findthatmovie/images/bg.jpg');
+}

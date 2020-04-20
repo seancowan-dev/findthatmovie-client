@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import Primary from './Primary';
 
-describe('| App Test Object |', () => {
+describe('| Primary View Test Object |', () => {
   it('should render correctly in "debug" mode', () => {
-    const component = shallow(<App debug />);
+    const component = shallow(<Primary debug />);
     expect(component).toMatchSnapshot();
   });
 });

@@ -1,0 +1,14 @@
+.account-information {
+    background-color: rgb(150, 150, 150);
+    height: 100vh;
+  }
+  
+  .account-navigation {
+    background-color: rgb(185, 185, 185);
+    height: 100vh;
+  }
+  
+  .account-page-container {
+    display: grid;
+    grid-template-columns: 100%;
+  }

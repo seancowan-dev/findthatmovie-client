@@ -5,7 +5,14 @@
   box-sizing: border-box;
 }
 
-
+#root {
+  min-height: 100vh;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective: 2px;
+  z-index: 3;
+  }
 
 body {
   margin: 0;

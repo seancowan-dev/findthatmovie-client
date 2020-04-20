@@ -1,0 +1,47 @@
+.youtube-video {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .youtube-trailer-container {
+    max-width: 100%;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    margin-top: 20px;
+  
+  }
+
+  .single-movie-results {
+      background-color: rgb(107, 107, 107);
+  }
+
+  .single-movie-heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .single-movie-budglength {
+      display: flex;
+      justify-content: space-evenly;
+  }
+
+  .single-movie-description {
+      margin: 10px;
+  }
+
+  .movie-poster {
+    max-width: 30vw;
+    float: left;
+    margin: 10px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    .movie-poster {
+        max-width: 300px;
+    }
+  }

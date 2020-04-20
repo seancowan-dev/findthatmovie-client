@@ -1,0 +1,11 @@
+.movie-cast-container {
+    width: 100%;
+    background-color: rgb(161, 161, 161);
+    display: grid;
+    grid-template-columns: 60px auto auto;
+  
+  }
+  
+  .cast-pictures {
+    max-width: 60px;
+  }

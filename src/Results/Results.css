@@ -1,0 +1,56 @@
+.result-rating-container {
+    position: relative;
+    content: content;
+}
+
+.result-rating-container:hover { 
+    cursor: pointer;
+}
+
+.result-rating-container:hover .result-rating {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.result-rating-container:hover .result-inner-rating {
+    background-color:rgba(225, 70, 88, 1.0);
+    color: rgba(255, 255, 255, 1.0);
+}
+
+.result-rating{
+    color: white;
+    position: absolute;
+    background-color:rgba(0, 0, 0, 0.0);
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    transition: .5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.result-inner-rating {
+    background-color:rgba(225, 70, 88, 0.0);
+    line-height: 45px;
+    vertical-align: middle;
+    height: 45px;
+    width: 65px;
+    position: absolute;
+    bottom: 45%;
+    radius: 5px;
+    color:rgba(255, 255, 255, 0.0);
+}
+
+.multi-movie-result-item {
+    display: flex;
+    direction: column;
+    bottom: 15px;
+}
+
+.search-results-container {
+    display: grid;
+    justify-content: space-around;
+}
+
+
