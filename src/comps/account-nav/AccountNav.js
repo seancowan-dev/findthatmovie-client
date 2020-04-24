@@ -5,7 +5,8 @@ import { A } from 'hookrouter';
 const AccNav = inject('dataStore', 'userStore')(observer((props) => {
     return <nav className="account-navigation">
         <ul>
-            <li>Test Link</li>
+            <li><A href="/account">Account Information</A></li>
+            <li><A href="/mylists">Your Lists</A></li>
         </ul>
     </nav>
 }));

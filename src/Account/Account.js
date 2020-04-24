@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { navigate, A } from 'hookrouter';
+import { A } from 'hookrouter';
 import AccNav from '../comps/account-nav/AccountNav';
 import './Account.css';
 import UserStore from '../stores/UserStore';
@@ -10,10 +10,10 @@ const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => 
     if (UserStore.authenticated === true) {
         return (
             <div className="account-page-container">
-                {/* <AccNav className="account-navigation"/> */}
+                <AccNav className="account-navigation"/>
                 <section className="account-information">
-                      <h1>Account Information</h1>
-                    <p>{"Welcome back " + props.userStore.authenticatedUser + "!"}</p>
+                    <h1>Account Information</h1>
+                    <p>{"Logged in as: " + props.userStore.authenticatedUser}</p>
 
                 </section>
               </div>

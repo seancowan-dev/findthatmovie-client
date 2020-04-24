@@ -16,7 +16,6 @@ function checkPoster(object) {
 
 const Results = inject('dataStore', 'userStore', 'searchStore')(observer((props) => {
     let output = null;
-
     if (props.searchStore.searchState === "display") { // If results are found
         output = props.searchStore.filteredResults.map((item, idx) => {
             return (<A href={"/results/" + item.original_title} key={idx * 5}>

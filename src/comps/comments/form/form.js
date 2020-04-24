@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import $ from 'jquery';
 import uuid from 'uuid';
-import { A, navigate } from 'hookrouter';
+import { navigate } from 'hookrouter';
 import { runInAction } from 'mobx';
 
 const Form = inject('dataStore', 'userStore')(observer((props) => {
@@ -21,7 +21,7 @@ const Form = inject('dataStore', 'userStore')(observer((props) => {
                     title_id: props.userStore.currentId,
                     user: props.userStore.authenticatedUser,
                     body: $('.user-comment-form-body').val(),
-                    posted: +new Date
+                    posted: +new Date()
                 }
 
                 arr.push(comment);

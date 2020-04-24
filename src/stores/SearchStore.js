@@ -10,8 +10,7 @@ class SearchStore {
          selectedGenre: "Select",
          selectedYear: "Select",
          selectedCountry: "Select",
-         selectedRatingMin: "0",
-         selectedRatingMax: "0",
+         selectedRatingMin: "Min",
          userQuery: ""
     }
 
@@ -131,7 +130,7 @@ class SearchStore {
     
         let returnObject = Promise.all([this.getYouTubeVideos(query + " trailer", "short")])
             .then(returnObject => {
-                return <iframe width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/" + returnObject[0].urls[0]} frameBorder="0" allowFullScreen></iframe>
+                return <iframe title="YouTube Trailer" width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/" + returnObject[0].urls[0]} frameBorder="0" allowFullScreen></iframe>
             });
 
         return returnObject;

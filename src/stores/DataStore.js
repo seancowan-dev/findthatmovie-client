@@ -22,7 +22,7 @@ class DataStore {
     {code: "10752", genre: "War"},
     {code: "37", genre: "Western"}];
 
-    @observable validNavLinks = '';
+    @observable validNavLinks = [];
 
     @observable years = [{ code: "Select", year: "Select"},
     { code: "2020", year: "2020"},
@@ -794,7 +794,13 @@ class DataStore {
         ]
     };
 
-    @observable temporaryAccounts = [];
+    @observable temporaryAccounts = [
+        {
+            username: "tac",
+            password: "11",
+            email: "tac@kovacs.com"
+        },
+    ];
 
     @observable comments = [
         {

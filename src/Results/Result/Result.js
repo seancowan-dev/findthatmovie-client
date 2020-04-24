@@ -1,6 +1,7 @@
 import React from 'react';
 import Comments from '../../comps/comments/comments';
 import Cast from '../../comps/cast/cast';
+import ListMenu from '../../comps/add-list-menu/Menu';
 import { observer, inject } from 'mobx-react';
 import './Result.css';
 
@@ -20,9 +21,14 @@ function budget(budg) {
 }
 
 const Result = inject('dataStore', 'searchStore', 'userStore', 'helpers')(observer((props) => {
+    const anchorEl = null;
     let details;
+    let addMenu;
     if (props.searchStore.detailedInfo !== undefined) {
         details = props.searchStore.detailedInfo;
+    }
+    if (props.userStore.authenticated === true) {
+        addMenu = <ListMenu />
     }
     props.userStore.currentId = props.searchStore.movieData[0].id;
     return (
@@ -37,10 +43,11 @@ const Result = inject('dataStore', 'searchStore', 'userStore', 'helpers')(observ
             <div className="single-movie-budglength">
                 <p className="budget-para">{budget(details.budget)}</p>
                 <p className="budget-para">{details.runtime} mins</p>
+                {addMenu}
             </div>
             <div className="single-movie-info">
                 <div className="single-movie-text">
-                    <img className="movie-poster" src={checkPoster(props.searchStore.movieData[0].poster_path)} />
+                    <img className="movie-poster" src={checkPoster(props.searchStore.movieData[0].poster_path)} alt="Poster of Movie"/>
                     <p className="single-movie-description">{props.searchStore.movieData[0].overview}</p>
                 </div>
                 <Cast info={props.searchStore.detailedInfo} />

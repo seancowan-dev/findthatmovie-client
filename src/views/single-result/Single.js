@@ -10,6 +10,7 @@ const Single = inject('dataStore', 'searchStore', 'helpers')(observer((props) =>
             if (item.original_title === unescape(props.title)) {
                 return item;
             }
+            return null
         });
     
         // Get detailed movie info like cast, etc.

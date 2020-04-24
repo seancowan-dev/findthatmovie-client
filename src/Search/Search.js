@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, FormControl,  InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
+import { Button, FormControl, InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
 // FormControlLabel, FormHelperText, Checkbox, 
 import { observer, inject } from 'mobx-react';
+import uuid from 'uuid';
 import { navigate } from 'hookrouter';
 
 const Search = inject("searchStore", "dataStore", "helpers")(observer((props) => {
@@ -12,16 +13,20 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
     let ratings = [];
 
         for (let i = 0; i < props.dataStore.genres.length; i++) {
-            genres[i] = <MenuItem key={Math.random()} value={props.dataStore.genres[i].code}>{props.dataStore.genres[i].genre}</MenuItem>
+            genres[i] = <MenuItem key={uuid.v4()} value={props.dataStore.genres[i].code}>{props.dataStore.genres[i].genre}</MenuItem>
         }
         for (let i = 0; i < props.dataStore.years.length; i++) {
-            years[i] = <MenuItem key={Math.random()} value={props.dataStore.years[i].code}>{props.dataStore.years[i].year}</MenuItem>
+            years[i] = <MenuItem key={uuid.v4()} value={props.dataStore.years[i].code}>{props.dataStore.years[i].year}</MenuItem>
         }
         for (let i = 0; i < props.dataStore.countries.length; i++) {
-            countries[i] = <MenuItem key={Math.random()} value={props.dataStore.countries[i].value}>{props.dataStore.countries[i].country}</MenuItem>
+            countries[i] = <MenuItem key={uuid.v4()} value={props.dataStore.countries[i].value}>{props.dataStore.countries[i].country}</MenuItem>
         }
         for (let i = 0; i < 11; i++) {
-            ratings[i] = <MenuItem key={Math.random()} value={i}>{i}</MenuItem>
+            if (i === 0) {
+                ratings[i] = <MenuItem key={uuid.v4()} value={"Min"}>Min</MenuItem>
+            } else {
+                ratings[i] = <MenuItem key={uuid.v4()} value={i}>{i}</MenuItem>
+            }
         }
     return <form className="search-form">
     <Grid 
@@ -87,7 +92,7 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
             </Select>
         </FormControl> */}
         <FormControl className="select-rating-control-min">
-            <InputLabel id="select-rating-label-min">Rating (Min)</InputLabel>
+            <InputLabel id="select-rating-label-min">Rating</InputLabel>
             <Select
                 labelId="select-rating-label-min"
                 id="select-rating-min"
@@ -95,20 +100,6 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
                 value={props.searchStore.searchParams.selectedRatingMin}
                 onChange={(e) => {
                     props.searchStore.searchParams.selectedRatingMin = e.target.value;
-                }}
-                >
-                {ratings}
-            </Select>
-        </FormControl>
-        <FormControl className="select-rating-control-max">
-            <InputLabel id="select-rating-label-max">Rating (Max)</InputLabel>
-            <Select
-                labelId="select-rating-label-max"
-                id="select-rating-max"
-                className="select-rating-max"
-                value={props.searchStore.searchParams.selectedRatingMax}
-                onChange={(e) => {
-                    props.searchStore.searchParams.selectedRatingMax = e.target.value;
                 }}
                 >
                 {ratings}
@@ -122,6 +113,7 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
                 if (item !== undefined) {
                     return item;
                 }
+                return null
             })
 
             // Filter results with the filter helper function

@@ -28,6 +28,7 @@
   .single-movie-budglength {
       display: flex;
       justify-content: space-evenly;
+      align-items: center;
   }
 
   .single-movie-description {

@@ -103,6 +103,7 @@ checkOutput(output, parsed) {
                 if (item.original_title.toLowerCase().includes(params.userQuery.toLowerCase())) {
                     return item;
                 }
+                return null
             });
         }
 
@@ -114,7 +115,8 @@ checkOutput(output, parsed) {
             output = currentResults.filter(item => { //Filter for specified genres
                 if (item.genre_ids.find(id => id === parseInt(params.selectedGenre))) { // Find ID
                     return item; // Return item if id exists
-                } 
+                }
+                return null
             });
 
         }
@@ -127,18 +129,7 @@ checkOutput(output, parsed) {
                 if (item.release_date.substr(0, 4) === params.selectedYear) { // Years are in the yyyy-mm-dd format, trim for year
                     return item;
                 }
-            })
-        }
-
-        if (params.selectedRatingMax !== "0") { // Trim down results based on max rating
-            let currentResults;
-
-            currentResults = this.checkOutput(output, parseResults);
-
-            output = currentResults.filter(item => {
-                if (item.vote_average <= params.selectedRatingMax) {
-                    return item;
-                }
+                return null
             })
         }
 
@@ -151,9 +142,9 @@ checkOutput(output, parsed) {
                 if (item.vote_average >= params.selectedRatingMin) {
                     return item;
                 }
+                return null
             })
         }
-        console.log(output);
 
         return output;
     }

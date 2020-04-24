@@ -5,6 +5,8 @@ import Single from '../views/single-result/Single';
 import Registration from '../views/register/Registration';
 import LoginPage from '../views/loginpage/LoginPage';
 import AccountPage from '../views/accountpage/AccountPage';
+import UserLists from '../views/user-list-page/UserLists';
+import SingleList from '../views/singlelist/SingleList';
 
 const routes = {
     "/": () => <Primary />,
@@ -12,7 +14,9 @@ const routes = {
     "/results/:title": ({title}) => <Single title={title} />,
     "/register": () => <Registration />,
     "/login": () => <LoginPage />,
-    "/account": () => <AccountPage />
+    "/account": () => <AccountPage />,
+    "/mylists": () => <UserLists />,
+    "/viewList/:id": ({id}) => <SingleList id={id}/>
 };
 
 export default routes;

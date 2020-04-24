@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { A } from 'hookrouter';
 import Form from './form/form';
+import uuid from 'uuid';
 import './comments.css';
 
 const Comments = inject('dataStore', 'userStore')(observer((props) => {
@@ -14,10 +14,11 @@ const Comments = inject('dataStore', 'userStore')(observer((props) => {
       if (parseInt(item.title_id) === props.userStore.currentId) {
         return item;
       }
+      return null
     });
     let comments = filtered.map(item => {
         return (
-        <div className="comment-container" key={Math.random()}>
+        <div className="comment-container" key={uuid.v4()}>
           <div className="comment-heading">
         <h4>{item.title}</h4>
         <p>{item.user + " " + new Date(item.posted)}</p> 
