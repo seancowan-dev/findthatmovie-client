@@ -7,6 +7,7 @@ import LoginPage from '../views/loginpage/LoginPage';
 import AccountPage from '../views/accountpage/AccountPage';
 import UserLists from '../views/user-list-page/UserLists';
 import SingleList from '../views/singlelist/SingleList';
+import Logout from '../views/logout/logout';
 
 const routes = {
     "/": () => <Primary />,
@@ -16,7 +17,8 @@ const routes = {
     "/login": () => <LoginPage />,
     "/account": () => <AccountPage />,
     "/mylists": () => <UserLists />,
-    "/viewList/:id": ({id}) => <SingleList id={id}/>
+    "/viewList/:id": ({id}) => <SingleList id={id}/>,
+    "/logout": () => <Logout />
 };
 
 export default routes;

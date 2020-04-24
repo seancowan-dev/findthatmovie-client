@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 class UserStore {
     @observable authenticated = false;
@@ -36,6 +36,13 @@ class UserStore {
         ]
         },
     ];
+
+    @action setLoginState(name) {
+        this.loginInfo.username = '';
+        this.loginInfo.password = '';
+        this.authenticated = true;
+        this.authenticatedUser = name;
+    }
 }
 
 export default new UserStore();

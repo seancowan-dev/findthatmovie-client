@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
-import DomainStore from './DomainStore'
+import DomainStore from './DomainStore';
+import TokenService from './services/token-service';
+import IdleService from './services/idle-service';
+import AuthApiService from './services/auth-api-service';
 import { useRoutes } from 'hookrouter';
 import Routes from './routing/Routing';
 import './App.css';
@@ -14,6 +17,60 @@ const store = {
 }
 
 const App = (props) => {
+
+  const logoutFromIdle = () => {
+    /* remove the token from localStorage */
+    TokenService.clearAuthToken()
+    /* remove any queued calls to the refresh endpoint */
+    TokenService.clearCallbackBeforeExpiry()
+    /* remove the timeouts that auto logout when idle */
+    IdleService.unRegisterIdleResets()
+    /*
+      react won't know the token has been removed from local storage,
+      so we need to tell React to rerender
+    */
+    this.forceUpdate()
+  }
+
+  useEffect(() => {
+    /*
+      set the function (callback) to call when a user goes idle
+      we'll set this to logout a user when they're idle
+    */
+   IdleService.setIdleCallback(logoutFromIdle)
+
+   /* if a user is logged in */
+   if (TokenService.hasAuthToken()) {
+     /*
+       tell the idle service to register event listeners
+       the event listeners are fired when a user does something, e.g. move their mouse
+       if the user doesn't trigger one of these event listeners,
+         the idleCallback (logout) will be invoked
+     */
+     IdleService.registerIdleTimerResets()
+
+     /*
+       Tell the token service to read the JWT, looking at the exp value
+       and queue a timeout just before the token expires
+     */
+     TokenService.queueCallbackBeforeExpiry(() => {
+       /* the timoue will call this callback just before the token expires */
+       AuthApiService.postRefreshToken()
+     })
+   }
+    return function cleanup() {
+       /*
+      when the app unmounts,
+      stop the event listeners that auto logout (clear the token from storage)
+    */
+    IdleService.unregisterIdleResets()
+    /*
+      and remove the refresh endpoint request
+    */
+    TokenService.clearCallbackBeforeExpiry()
+    };
+  });
+
   const routeResult = useRoutes(Routes); 
   return(
     <Provider {...store}>
