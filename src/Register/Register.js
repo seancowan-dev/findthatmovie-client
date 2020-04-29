@@ -3,8 +3,11 @@ import { runInAction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Button, FormControl, TextField, Container } from '@material-ui/core';
 import { navigate, A } from 'hookrouter';
+import bcrypt from 'bcryptjs';
+import moment from 'moment';
 import $ from 'jquery';
 import './Register.css';
+import UserService from '../services/users-service';
 
 const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
     
@@ -90,8 +93,7 @@ const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) =>
                     onClick={(e) => {
                         e.preventDefault();
 
-                        // This is where encryption and preparation of the JWT will take place
-                        // For testing using plain text
+                        // Check Data
                         let data = {
                             userName: props.userStore.newRegistrant.username,
                             email: props.userStore.newRegistrant.email,
@@ -99,17 +101,27 @@ const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) =>
                             password: props.userStore.newRegistrant.password,
                             passwordConfirm: props.userStore.newRegistrant.confirmPassword
                         }
+                        console.log(data);
+                        // Perform Validations - Need to add more validations for final version
                         if (props.helpers.registrationValidator(data) === true) {
-                            let arr = props.dataStore.temporaryAccounts.slice();
-                            // This is where the database will be accessed, for now add user to temp store
-                            let confirmed = {
-                                username: data.userName,
-                                password: data.password,
-                                email: data.email
-                            }
-                            arr.push(confirmed);
-                            runInAction(() => props.dataStore.temporaryAccounts = arr);
-                            navigate("/login");
+                            // let arr = props.dataStore.temporaryAccounts.slice();
+
+                            bcrypt.hash(props.userStore.newRegistrant.password, 8, function(err, hash) {
+                                let confirmed = {
+                                    "name": props.userStore.newRegistrant.username,
+                                    "password": hash,
+                                    "email": props.userStore.newRegistrant.email,
+                                    "perm_level": "user",
+                                    "created_at": moment().format()
+                                }
+                                console.log(JSON.stringify(confirmed));
+                                UserService.addUser(JSON.stringify(confirmed));
+                                navigate("/login");
+                            });
+
+                            // arr.push(confirmed);
+                            // runInAction(() => props.dataStore.temporaryAccounts = arr);
+
                         } else {
                             // This is where form validation functions will be put, for now just alert the user
                             alert('Please confirm that password and email match');
