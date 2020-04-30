@@ -1,5 +1,6 @@
 import config from './config';
 import Helpers from '../stores/Helpers';
+import TokenService from '../services/token-service';
 
 const UserService = {
     async addUser(confirmedInfo) {
@@ -12,6 +13,34 @@ const UserService = {
         })
         .then(res => {
             Helpers.handleErrors(res);
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    },
+    async getUserInfo(id) {
+        return await fetch(`${config.API_ENDPOINT}/users/info/${id}?api_key=${config.CLIENT_API_KEY}`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}` 
+            },
+        })
+        .then(res => {
+            return Helpers.handleErrors(res)
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    },
+    async updateUser(id, info) {
+        return await fetch(`${config.API_ENDPOINT}/users/update/${id}?api_key=${config.CLIENT_API_KEY}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            },
+            body: info
         })
         .catch(err => {
             console.error(err)

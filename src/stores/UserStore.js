@@ -6,12 +6,20 @@ class UserStore {
     @observable currentId = "";
     @observable userLists = [];
 
+    @observable userInformation = null;
+
     @observable newRegistrant = {
         username: "",
         email: "",
         confirmEmail: "",
         password: "",
         confirmPassword: ""
+    }
+
+    @observable changePassword = {
+        old: "",
+        new: "",
+        newConfirm: ""
     }
 
     @observable loginInfo = {
@@ -42,6 +50,10 @@ class UserStore {
         this.loginInfo.password = '';
         this.authenticated = true;
         this.authenticatedUser = name;
+    }
+
+    @action setUserInfo(res) {
+        this.userInformation = res;
     }
 }
 
