@@ -20,8 +20,7 @@ function budget(budg) {
     return "$" + parseInt(budg).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
 
-const Result = inject('dataStore', 'searchStore', 'userStore', 'helpers')(observer((props) => {
-    const anchorEl = null;
+const Result = inject('searchStore', 'userStore')(observer((props) => {
     let details;
     let addMenu;
     if (props.searchStore.detailedInfo !== undefined) {
@@ -30,11 +29,11 @@ const Result = inject('dataStore', 'searchStore', 'userStore', 'helpers')(observ
     if (props.userStore.authenticated === true) {
         addMenu = <ListMenu />
     }
-    props.userStore.currentId = props.searchStore.movieData[0].id;
+    props.userStore.currentId = props.searchStore.movieData.id;
     return (
         <div className="single-movie-results">
             <div className="single-movie-heading">
-                <h2>{props.searchStore.movieData[0].original_title}</h2>
+                <h2>{props.searchStore.movieData.original_title}</h2>
                 <h3>{details.tagline}</h3>
             </div>
             <div className="youtube-trailer-container">
@@ -47,8 +46,8 @@ const Result = inject('dataStore', 'searchStore', 'userStore', 'helpers')(observ
             </div>
             <div className="single-movie-info">
                 <div className="single-movie-text">
-                    <img className="movie-poster" src={checkPoster(props.searchStore.movieData[0].poster_path)} alt="Poster of Movie"/>
-                    <p className="single-movie-description">{props.searchStore.movieData[0].overview}</p>
+                    <img className="movie-poster" src={checkPoster(props.searchStore.movieData.poster_path)} alt="Poster of Movie"/>
+                    <p className="single-movie-description">{props.searchStore.movieData.overview}</p>
                 </div>
                 <Cast info={props.searchStore.detailedInfo} />
                 <Comments />

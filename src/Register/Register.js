@@ -1,5 +1,4 @@
 import React from 'react';
-import { runInAction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Button, FormControl, TextField, Container } from '@material-ui/core';
 import { navigate, A } from 'hookrouter';
@@ -118,9 +117,6 @@ const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) =>
                                 UserService.addUser(JSON.stringify(confirmed));
                                 navigate("/login");
                             });
-
-                            // arr.push(confirmed);
-                            // runInAction(() => props.dataStore.temporaryAccounts = arr);
 
                         } else {
                             // This is where form validation functions will be put, for now just alert the user

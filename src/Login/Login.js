@@ -35,6 +35,7 @@ const Login = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
                 </FormControl>
                 <FormControl>
                     <Button color="primary" variant="contained" type="submit" onClick={(e) => {
+                        e.preventDefault();
                         // Pull data from user store
                         let data = {
                             userName: props.userStore.loginInfo.username,
@@ -42,10 +43,14 @@ const Login = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
                         };
                         // Create user auth token and store on client
                         AuthApiService.postLogin({name: data.userName, password: data.password}).then(res => {
-                            TokenService.saveAuthToken(res.authToken);                            
+                            TokenService.saveAuthToken(res.authToken);           
                         });
-                        // Set store values for authenticated user
-                        props.userStore.setLoginState(data.userName);
+                        // Store important user states
+                        props.userStore.setAuthenticated(true);
+                        props.userStore.setAuthenticatedUser(data.userName);
+                        // Cleanup user info
+                        props.userStore.cleanupUserLogin(data.userName);   
+                        // Move to main view of site
                         navigate("/");
                     }}>Login</Button>
                 </FormControl>

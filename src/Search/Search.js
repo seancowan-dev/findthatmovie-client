@@ -109,28 +109,19 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
         <Button
         variant="contained"
         onClick={(e) => {
-            let trimmed = props.dataStore.testMovieData.results.filter(item => { // Trim MobX placeholder pairs
-                if (item !== undefined) {
-                    return item;
-                }
-                return null
-            })
+            navigate('/results'); // Move user forward to next results page | Breadcrumb this later|
 
-            // Filter results with the filter helper function
-            props.searchStore.filteredResults = props.helpers.filterMovieResults(trimmed, props.searchStore.searchParams)
-
-            // If the results array has been formed check to see if it has undefined content or not
-            if (props.searchStore.filteredResults.length > 0) {
-                if (props.searchStore.filteredResults[0] !== undefined) { // There are search results, display them
+            props.searchStore.getMovieList(false).then(res => {
+                props.searchStore.searchResults = []; // Make sure old results are removed
+                if (res.results !== undefined || res.results.length !== 0) {
+                    props.searchStore.total_pages = res.total_pages;
+                    props.searchStore.searchResults.push(res);
                     props.searchStore.searchState = "display";
                 }
-                if (props.searchStore.filteredResults[0] === undefined) {
-                    props.searchStore.searchState = "none"; // There are not search results, tell the user
+                if (res.results === undefined || res.results.length === 0) {
+                    props.searchStore.searchState = "none";
                 }
-            } else { // If we've reached this point it means there are also no results, tell the user
-                props.searchStore.searchState = "none";
-            }
-            navigate('/results'); // Move user forward to next results page | Breadcrumb this later|
+            });
         }}
         >
             Search

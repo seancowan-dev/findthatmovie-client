@@ -11,7 +11,7 @@ const UserService = {
             },
             body: confirmedInfo
         })
-        .then(res => {
+        .then(res => { 
             Helpers.handleErrors(res);
         })
         .catch(err => {

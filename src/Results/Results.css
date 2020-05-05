@@ -48,8 +48,13 @@
     bottom: 15px;
 }
 
+.result-poster {
+    max-width: 150px;
+}
+
 .search-results-container {
     display: grid;
+    grid-template-columns: repeat(5, 17%);
     justify-content: space-around;
 }
 

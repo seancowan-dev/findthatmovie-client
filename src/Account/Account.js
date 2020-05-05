@@ -5,11 +5,12 @@ import AccNav from '../comps/account-nav/AccountNav';
 import './Account.css';
 import UserStore from '../stores/UserStore';
 import UserService from '../services/users-service';
-import { Button, FormControl, FormHelperText, InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
+import bcrypt from 'bcryptjs';
+import { Button, FormControl, FormHelperText, TextField } from '@material-ui/core';
 
 const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
 
-    if (UserStore.authenticated === true) {
+    if (UserStore.loginInfo.authenticated === true) {
         return (
             <div className="account-page-container">
                 <AccNav className="account-navigation"/>
@@ -60,12 +61,15 @@ const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => 
                     color="secondary"
                     onClick={(e) => {
                         if (props.userStore.changePassword.new === props.userStore.changePassword.newConfirm) {
-                            let info = {
-                                "name": props.userStore.userInformation.name,
-                                "password": props.userStore.changePassword.newConfirm,
-                                "email": props.userStore.userInformation.email
-                            }
-                            UserService.updateUser(props.userStore.userInformation.id, JSON.stringify(info))
+                            bcrypt.hash(props.userStore.changePassword.newConfirm, 8, function (err, hash) {
+                                let info = {
+                                    "name": props.userStore.userInformation.name,
+                                    "password": hash,
+                                    "email": props.userStore.userInformation.email
+                                }
+                                UserService.updateUser(props.userStore.userInformation.id, JSON.stringify(info))
+                            });
+
                         }
                         props.userStore.changePassword = {
                             old: "",
@@ -80,7 +84,7 @@ const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => 
               </div>
             );
     }
-    if (UserStore.authenticated === false) {
+    if (UserStore.loginInfo.authenticated === false) {
         return (
             <div className="account-page-container">
                 <section className="account-information">
