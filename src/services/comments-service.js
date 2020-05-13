@@ -106,6 +106,21 @@ const CommentsService = {
             console.error(err);
         })
     },
+    async deleteReply(id) {  // Deletes an existing user comment
+        return await fetch(`${config.API_ENDPOINT}/comments/delete/reply/${id}?api_key=${config.CLIENT_API_KEY}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            }
+        })
+        .then(res => {
+            return Helpers.handleErrors(res);
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    },
     async updateComment(newComment, id) {  // Deletes an existing user comment
         return await fetch(`${config.API_ENDPOINT}/comments/update/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'PATCH',

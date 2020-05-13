@@ -183,6 +183,7 @@ class Helpers {
       }
     checkVisibleEdit(targetElement) {
         let currentClass = targetElement.parentElement.nextSibling.className;
+        console.log(currentClass);
         let otherClasses;
         let visibleClass;
         let strPos;
@@ -226,12 +227,15 @@ class Helpers {
             visibleClass = currentClass.slice(strPos, currentClass.length);
           }
         }
+
         let newVisibility;
         visibleClass === "active" ? newVisibility = "inactive" : newVisibility = "active";
 
+        let comment = UserStore.getEditComment
+        targetElement.parentElement.nextSibling.children[0].children[0].value = comment.comment;
         targetElement.parentElement.nextSibling.className = otherClasses + " " + newVisibility;
         return;
-    }       
+    }
     checkCommentMessageVisible(state) {
         if (state === true) {
             return "active"
