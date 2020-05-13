@@ -1,6 +1,8 @@
 import React from 'react';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import Helpers from './Helpers';
+import UserStore from './UserStore';
+import CommentsService from '../services/comments-service';
 import config from '../services/config';
 import clone from 'lodash.clone';
 
@@ -21,13 +23,50 @@ class SearchStore {
     @observable page = 0;
     @observable pageOld = null;
     @observable total_pages = null;
-
+    @observable loading = true;
+        //Getters
+            @computed get getLoading() {
+                return this.loading;
+            }
+        //Setters
+            @action setLoading(val) {
+                this.loading = val;
+            }
     // Movie Data Stores
     @observable searchResults = [];
     @observable movieData = null;
     @observable detailedInfo = {};
-    @observable trailerFragment;
-
+    @observable trailerFragment = <iframe title="YouTube Trailer" width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/D7npse9n-Yw"} frameBorder="0" allowFullScreen></iframe>;
+        // Getters for movie data
+        @computed get getMovieData() {
+            return this.movieData;
+        }
+        @computed get getOriginalTitle() {
+            return this.movieData.original_title;
+        }
+        @computed get getPoster() {
+            return this.movieData.poster_path;
+        }
+        @computed get getOverview() {
+            return this.movieData.overview;
+        }
+        @computed get getTrailerFragment() {
+            return this.trailerFragment;
+        }
+        @computed get getSearchResults() {
+            return this.searchResults;
+        }
+        @computed get getReleaseDate() {
+            return this.movieData.release_date;
+        }
+        // Setting actions for movie data
+        @action setMovieData(newData, id) {
+            this.movieData = newData;
+            UserStore.currentId = id;
+        }
+        @action setTrailerFragment(newFrag) {
+            this.trailerFragment = newFrag;
+        }
     // State Variables for page navigation
     @observable searchState = "default"; 
     // 'default' - when site first loads, 'display' - if results are not empty, 'none' - if no results found
@@ -44,42 +83,52 @@ class SearchStore {
                 return responseJSON // return JSON
             })
             .catch(e => alert(e));
-    
-    
         let returnObject = { // build returnObject
             urls: [],
             snippets: []
+        }            
+        if (requestData !== undefined) {
+            for (let i = 0; i < requestData.items.length; i++) {
+                returnObject.urls[i] = requestData.items[i].id.videoId;
+                returnObject.snippets[i] = requestData.items[i].snippet;
+            }
         }
-    
-        for (let i = 0; i < requestData.items.length; i++) {
-            returnObject.urls[i] = requestData.items[i].id.videoId;
-            returnObject.snippets[i] = requestData.items[i].snippet;
-        }
-    
+        
         return returnObject;
     }
 
-    async displayYouTubeTrailer(store) { // Display an appropriate trailer
-        let query = store.original_title + " " + store.release_date.substr(0,4);
+    async displayYouTubeTrailer() { // Display an appropriate trailer
+        let query = this.getOriginalTitle + " " + this.getReleaseDate.substr(0,4);
     
         let returnObject = await this.getYouTubeVideos(query + " trailer", "short")
             .then(res => {
-                return <iframe title="YouTube Trailer" width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/" + res.urls[0]} frameBorder="0" allowFullScreen></iframe>
+                if (res.urls) {
+                    return <iframe title="YouTube Trailer" width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/" + res.urls[0]} frameBorder="0" allowFullScreen></iframe>
+                } else {
+                    return <iframe title="YouTube Trailer" width="1280px" height="720px" className="youtube-video" src={"https://www.youtube.com/embed/D7npse9n-Yw"} frameBorder="0" allowFullScreen></iframe>
+                }
+                
             });
 
-        this.trailerFragment = returnObject;
+        return returnObject;
     }
 
     // TMDB API actions
 
-        // Helper Actions
-        @action getDetailedInfo() {
+        // Getter Actions
+        @computed get getDetailedInfo() {
             return this.detailedInfo;
         }
-        //
+        // Setter Actions
+        @action setDetailedInfo(info) {
+            info.then(res => {
+                this.detailedInfo = res;
+            }) 
+        }
 
 
-    async getDetailedMovieInfo(id) { // Get more detailed information about the specified movie, needs ID passed from getMovieInfoByName()
+    async getDetailedMovieInfo() { // Get more detailed information about the specified movie, needs ID passed from getMovieInfoByName()
+        let id = UserStore.currentId
         const baseURLInfo = "https://api.themoviedb.org/3/movie/";
         let queryString = Helpers.encodeQueryParams(Helpers.buildDetailedMovieParams());
         let requestURLInfo = baseURLInfo + id + "?" + queryString;
@@ -150,7 +199,7 @@ class SearchStore {
             }
     
         })();    
-        this.detailedInfo = returnObject;
+        return returnObject;
     }
 
     @action async getMovieList(newPage = false) { // Get a list of movies by year or by genre, or by both; if no year is entered default to current year
@@ -211,9 +260,15 @@ class SearchStore {
     }
 
     @action setSingleMovieResults(movieData, id) {
-        this.movieData = movieData;
-        this.getDetailedMovieInfo(id);
-        this.displayYouTubeTrailer(movieData)
+        this.setMovieData(movieData, id);
+        this.setDetailedInfo(this.getDetailedMovieInfo());
+        CommentsService.getMovieComments(UserStore.getCurrentId).then(res => {
+            UserStore.setMovieComments(res);
+          });    
+        console.log("is it repeating?");
+        // this.displayYouTubeTrailer().then(res => {
+        //     this.setTrailerFragment(res);
+        // });
     }
 }
 

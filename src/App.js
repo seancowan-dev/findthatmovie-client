@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
 import DomainStore from './DomainStore';
 import TokenService from './services/token-service';
 import IdleService from './services/idle-service';
 import AuthApiService from './services/auth-api-service';
-import { useRoutes } from 'hookrouter';
+import uuid from 'uuid';
+import { useRoutes, A, navigate } from 'hookrouter';
 import Routes from './routing/Routing';
 import './App.css';
 
@@ -16,29 +17,37 @@ const store = {
   userStore: DomainStore.userStore
 }
 
-const App = (props) => {
+window.addEventListener("load", (e) => {
+  let links = DomainStore.helpers.makeLoginLinks(DomainStore.userStore); // Get default response so logoutLinks are always available
+  if (TokenService.hasAuthToken()) { // User still has valid auth token from prior login
+    DomainStore.helpers.handleReturningUser();
+  }
+  if (!TokenService.hasAuthToken()) { // User has not logged in
+    DomainStore.userStore.setValidNavLinks(links.logoutLinks); // Set data using mobx action
+  }
+})
 
+const App = (props) => {
   const logoutFromIdle = () => {
     /* remove the token from localStorage */
     TokenService.clearAuthToken()
     /* remove any queued calls to the refresh endpoint */
     TokenService.clearCallbackBeforeExpiry()
     /* remove the timeouts that auto logout when idle */
-    IdleService.unRegisterIdleResets()
-    /*
-      react won't know the token has been removed from local storage,
-      so we need to tell React to rerender
-    */
-    this.forceUpdate()
-  }
+    IdleService.unregisterIdleResets()
+    // /*
+    //   react won't know the token has been removed from local storage,
+    //   so we need to tell React to rerender
+    // */
 
+  }
   useEffect(() => {
     /*
       set the function (callback) to call when a user goes idle
       we'll set this to logout a user when they're idle
     */
-   IdleService.setIdleCallback(logoutFromIdle)
-
+   IdleService.setIdleCallback(logoutFromIdle);
+    
    /* if a user is logged in */
    if (TokenService.hasAuthToken()) {
      /*

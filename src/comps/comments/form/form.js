@@ -4,6 +4,7 @@ import $ from 'jquery';
 import uuid from 'uuid';
 import { navigate } from 'hookrouter';
 import { runInAction } from 'mobx';
+import CommentsService from '../../../services/comments-service';
 
 const Form = inject('dataStore', 'userStore')(observer((props) => {
     return (
@@ -14,19 +15,20 @@ const Form = inject('dataStore', 'userStore')(observer((props) => {
             <input className="user-comment-form-submit" type="submit" value="Submit Comment" onClick={(e) => {
                 e.preventDefault();
                 
-                let arr = props.dataStore.comments.slice();
-
+                // let arr = props.userStore.movieComments.slice();
+                let date = + new Date();
                 let comment = {
-                    id: uuid.v4(),
-                    title_id: props.userStore.currentId,
-                    user: props.userStore.authenticatedUser,
-                    body: $('.user-comment-form-body').val(),
-                    posted: +new Date()
+                    "movie_id": props.userStore.currentId,
+                    "user_name": props.userStore.loginInfo.authenticatedUser,
+                    "user_id": props.userStore.userInformation.id,
+                    "comment": $('.user-comment-form-body').val(),
+                    "reply" : false,
+                    "updated_at": new Date(date).toISOString()
                 }
+                console.log(comment);
+                // arr.push(comment);
 
-                arr.push(comment);
-
-                runInAction(() => props.dataStore.comments = arr);
+                runInAction(() => CommentsService.addComment(comment));
 
                 navigate(window.location.pathname);
             }}/>

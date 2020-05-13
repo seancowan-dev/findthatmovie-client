@@ -2,33 +2,57 @@ import React from 'react';
 import Search from '../../Search/Search';
 import Result from '../../Results/Result/Result';
 import Nav from '../../Nav/Nav';
+import UserService from '../../services/users-service';
+import TokenService from '../../services/token-service';
+import CommentsService from '../../services/comments-service';
 import { observer, inject } from 'mobx-react';
 
-const Single = inject('dataStore', 'searchStore', 'helpers')(observer((props) => {
+const Single = inject('userStore', 'searchStore', 'helpers')(observer((props) => {
         let moviePage
         let movieData
-        moviePage = props.searchStore.searchResults.map(item => {
-            if (item.results.filter(item => {
-                if (item.original_title === unescape(props.title)) {
+        if (props.userStore.getUserInfo === null && props.userStore.getAuthenticated === true) { // If the user has not already visited the account page get their info
+            UserService.getUserInfo(TokenService.readJwtToken().user_id)
+            .then(res => {
+                let userInfo = {
+                    name: res.name,
+                    email: res.email,
+                    id: TokenService.readJwtToken().user_id,
+                    created_at: res.created_at,
+                    updated_at: res.updated_at,
+                    perm_level: res.perm_level
+                }
+                props.userStore.setUserInfo(userInfo);
+            })
+        }
+        if (props.searchStore.getSearchResults !== undefined) { // only map data if it is available
+            moviePage = props.searchStore.getSearchResults.map(item => {
+                if (item.results.filter(item => {
+                    if (item.original_title === unescape(props.title)) {
+                        return item;
+                    }
+                    return null
+                }) !== null) {
                     return item;
                 }
-                return null
-            }) !== null) {
-                return item;
+                return null;
+            });
+
+            if (moviePage.length > 0 && props.searchStore.getLoading === true) {
+                movieData = moviePage[0].results.filter(item => {
+                    if (item.original_title === unescape(props.title)) {
+                        return item;
+                    }
+                    return null
+                });
+                
+                // Store the detailed info for Result component to use
+                props.searchStore.setSingleMovieResults(movieData[0], movieData[0].id);
+                props.searchStore.setLoading(false);
             }
-            return null;
-        });
-        movieData = moviePage[0].results.filter(item => {
-            if (item.original_title === unescape(props.title)) {
-                return item;
-            }
-            return null
-        });
+        }
+
         
-        // Store the detailed info for Result component to use
-        props.searchStore.setSingleMovieResults(movieData[0], movieData[0].id);
-        // props.searchStore.getDetailedMovieInfo(props.searchStore.movieData[0].id);
-        // props.searchStore.displayYouTubeTrailer(props.searchStore.movieData[0]);
+
     return <>
         <Nav />
         <div className="parallax"></div>

@@ -3,6 +3,8 @@ import { observer, inject } from 'mobx-react';
 import { A } from 'hookrouter';
 import debounce from 'lodash.debounce';
 import SearchStore from '../stores/SearchStore';
+import UserService from '../services/users-service';
+import TokenService from '../services/token-service';
 import './Results.css';
 
 function checkPoster(object) {
@@ -34,7 +36,7 @@ if (SearchStore.noLoad === false) {
 
 const Results = inject('dataStore', 'userStore', 'searchStore', 'helpers')(observer((props) => {
     let output = null;
-
+    props.searchStore.setLoading(true); // When the user searches for new results set the loading value to true for single result page
     if (props.searchStore.searchState === "none") {  // No results were found
         output = <div>No results found</div>
     }
