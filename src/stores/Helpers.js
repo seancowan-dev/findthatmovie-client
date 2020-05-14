@@ -44,7 +44,6 @@ class Helpers {
 
     handleErrors(response) { // prepares error message for HTTP request errors
         if (response.ok === true) {
-            console.log(response);
             return response.json();
         } 
         // else {

@@ -24,18 +24,12 @@ const AccountPage = inject('dataStore', 'userStore', 'helpers')(observer((props)
             props.userStore.setUserInfo(userInfo);
         })
     }
-    if (props.userStore.userLists === null) {
-        props.userStore.loginInfo.loaded = false;
-        ListsService.getUserLists(TokenService.readJwtToken().user_id)
-        .then(res => {
-            let grouped = res.reduce((reducer, array) => {
-                reducer[array.list_id] = [...reducer[array.list_id] || [], array];
-                return reducer; 
-            }, {});
-            props.userStore.setUserLists(grouped);
-            props.userStore.loginInfo.loaded = true;
-        })
-    }
+    // if (props.userStore.userLists === null) {
+    //     ListsService.getUserLists(TokenService.readJwtToken().user_id)
+    //     .then(res => {
+    //         props.userStore.setUserLists(res);
+    //     })
+    // }
     if (props.userStore.userInformation !== null) {
         return <>
         <Nav />

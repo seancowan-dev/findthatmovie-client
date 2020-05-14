@@ -12,7 +12,7 @@ import SearchStore from './SearchStore';
 class UserStore {
     // Logging In
     @observable currentId = "";
-    @observable userLists = [];
+    @observable userLists = null;
     
     // Account Page
     @observable userInformation = null;
@@ -20,7 +20,15 @@ class UserStore {
         @computed get getUserInfo() {
             return this.userInformation;
         }
-
+        @computed get getUserEmail() {
+            return this.userInformation.email;
+        }       
+        @computed get getAccountCreationDate() {
+            return this.userInformation.created_at;
+        }
+        @computed get getAccountUpdateDate() {
+            return this.userInformation.updated_at;
+        }                      
     // Account Creation
     @observable newRegistrant = {
         username: "",
@@ -42,7 +50,33 @@ class UserStore {
         new: "",
         newConfirm: ""
     }
-
+    //Setters
+        @action resetChangePassword() {
+            this.changePassword = {
+                old: "",
+                new: "",
+                newConfirm: ""
+            }            
+        }
+        @action setChangePasswordNew(newPass) {
+            this.changePassword.new = newPass;
+        }
+        @action setChangePasswordOld(oldPass) {
+            this.changePassword.old = oldPass;
+        }        
+        @action setChangePasswordNewConfirm(newPassConfirm) {
+            this.changePassword.newConfirm = newPassConfirm;
+        }
+    //Getters
+        @computed get getChangePasswordNew() {
+            return this.changePassword.new;
+        }
+        @computed get getChangePasswordOld() {
+            return this.changePassword.old;
+        }
+        @computed get getChangePasswordNewConfirm() {
+            return this.changePassword.newConfirm;
+        }                
     // Controlled inputs for login
     @observable loginInfo = {
         username: "",
@@ -61,14 +95,32 @@ class UserStore {
         @computed get getLoaded() {
             return this.loginInfo.loaded;
         }  
-        @computed get getUsername() {
-            return this.loginInfo.username;
-        }        
+        // @computed get getUsername() {
+        //     return this.loginInfo.username;
+        // }        
         @computed get getPassword() {
             return this.loginInfo.password;
         }      
     // User Lists Storage
     @observable userLists = {};
+    @observable listLoaded = false;
+        // Getter
+        @computed get getListLoaded() {
+            return this.listLoaded
+        }
+        // Setter
+        @action toggleListLoaded(val) {
+            this.listLoaded = val;
+        }
+    @observable expandedHistory = [];
+        // Getter
+        @computed get getExpandedHistory() {
+            return this.expandedHistory;
+        }
+        // Setter
+        @action setExpandedHistory(history) {
+            this.expandedHistory = history;
+        }        
     @observable validNavLinks = null;
     @action setValidNavLinks(linkObj) {
         this.validNavLinks = linkObj;
@@ -116,17 +168,13 @@ class UserStore {
         return this.userInformation.id;
       }
     @action setUserLists(res) {
-        Object.assign(this.userLists, res);
+        this.userLists = res;
     }
     @action async cleanupUserLogin(token) {
         this.setLoaded(false);
         await ListsService.getUserLists(TokenService.parseJwt(token).user_id)
         .then(res => {
-            let grouped = res.reduce((acc, curr) => {
-                acc[curr.list_id] = [...acc[curr.list_id] || [], curr];
-                return acc;
-            }, []);
-            this.setUserLists(grouped);
+            this.setUserLists(res);
             this.setUsername("");
             this.setPassword("");
             this.setLoaded(true);
@@ -158,9 +206,6 @@ class UserStore {
     @action setCommentMessage(input) {
         this.commentMessage.message = input;
     }
-    // @action setCommentObject() {
-        
-    // }
 
     @computed get getCommentObject() {
         return this.commentObject;
@@ -181,73 +226,6 @@ class UserStore {
         
         await CommentsService.addComment(comment);
     }
-    // makeCommentObject(resComments) {
-    //     let tree = this.makeTreedComments(resComments);
-    //     let replyObj;
-    //     return tree.map(commentObj => {  // Comments will only be one level deep so no need for reply button on replies
-    //         if (commentObj.replies[0] !== undefined) {
-    //           replyObj = commentObj.replies.map(reply => {
-    //             return (  // For each reply build and return appropriate ui elements
-    //               <Comment key={uuid.v4()} id={reply.id}>
-    //                 <Comment.Content key={uuid.v4()}>
-    //                   <Comment.Author  key={uuid.v4()} as='a' key={uuid.v4()}>{reply.rep_user}</Comment.Author>
-    //                   <Comment.Metadata key={uuid.v4()}>
-    //                     <div>{ moment().format(reply.rep_uat) }</div>
-    //                   </Comment.Metadata>
-    //                     <Comment.Text  key={uuid.v4()}>{reply.rep_comment}</Comment.Text>
-    //                   <Comment.Actions key={uuid.v4()}>
-    //                     <Comment.Action key={uuid.v4()} as='button' className="comment-edit" onClick={(e) => {console.log("working")}}>Edit</Comment.Action>
-    //                     <Comment.Action key={uuid.v4()} as='button' className="comment-delete" onClick={(e) => {console.log("working")}}>Delete</Comment.Action>
-    //                   </Comment.Actions>
-    //                 </Comment.Content>
-    //               </Comment>
-    //             );
-    //           });
-    //         }
-    //         return (  // For each comment return the appropriate ui elements with their replies
-    //           <Comment key={uuid.v4()} id={commentObj.id}>
-    //           <Comment.Content key={uuid.v4()}>
-    //             <Comment.Author key={uuid.v4()} as='a'>{commentObj.user_name}</Comment.Author>
-    //             <Comment.Metadata key={uuid.v4()} >
-    //               <div>{ moment().format(commentObj.updated_at) }</div>
-    //             </Comment.Metadata>
-    //               <Comment.Text key={uuid.v4()}>{commentObj.comment}</Comment.Text>
-    //             <Comment.Actions key={uuid.v4()}>
-    //               <Comment.Action key={uuid.v4()} as='button' onClick={(e) => {
-    //                     Helpers.checkVisible(e.target)
-    //                 }}>Reply</Comment.Action>
-    //               <Comment.Action key={uuid.v4()} as='button' className="comment-edit" onClick={(e) => {console.log("working")}}>Edit</Comment.Action>
-    //               <Comment.Action key={uuid.v4()} as='button' className="comment-delete" onClick={(e) => {console.log("working")}}>Delete</Comment.Action>               
-    //             </Comment.Actions>
-    //           </Comment.Content>
-    //           <Comment.Group key={uuid.v4()} threaded className={"inactive"}>
-    //             {replyObj !== undefined ? replyObj : ""}
-    //             <Form key={uuid.v4()} reply>
-    //                       <Form.TextArea key={uuid.v4()} />
-    //                       <Button
-    //                         key={uuid.v4()}
-    //                         content='Add Reply'
-    //                         labelPosition='left'
-    //                         icon='edit'
-    //                         primary
-    //                         onClick={(e) => {
-    //                           console.log(e.target.parentElement.parentElement.parentElement.id);
-    //                           // this.setCommentVisibility();
-    //                           // this.setCommentMessage("do you smellelelelleleoooowww what the rock is cookin??")
-    //                           // props.helpers.checkUserPerms(e.target.parentElement.parentElement.parentElement.id).then(res => {
-                                
-    //                           // });
-    //                           this.postComment(e.target, true);
-    //                           this.setMovieComments(this.currentId);
-    //                        }}/>
-    //                     </Form>
-    //           </Comment.Group>
-              
-    
-    //         </Comment>
-    //         );
-    //       })
-    // }
     makeTreedComments(movieComments) { // Take the full list of joined comments and replies and enumerate them into a treed list
         let grouped = movieComments.reduce((acc, curr) => { // Group comments into objects by ID
             acc[curr.id] = [...acc[curr.id] || [], curr];
