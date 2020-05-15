@@ -24,12 +24,6 @@ const AccountPage = inject('dataStore', 'userStore', 'helpers')(observer((props)
             props.userStore.setUserInfo(userInfo);
         })
     }
-    // if (props.userStore.userLists === null) {
-    //     ListsService.getUserLists(TokenService.readJwtToken().user_id)
-    //     .then(res => {
-    //         props.userStore.setUserLists(res);
-    //     })
-    // }
     if (props.userStore.userInformation !== null) {
         return <>
         <Nav />

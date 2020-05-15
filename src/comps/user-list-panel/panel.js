@@ -1,11 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField }  from '@material-ui/core';
+import { Container, ExpansionPanel, ExpansionPanelSummary, FormHelperText, FormControl, ExpansionPanelDetails, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField }  from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { Message } from 'semantic-ui-react';
 import $ from 'jquery';
 import uuid from 'uuid';
 import ListsService from '../../services/lists-service';
+import './panel.css';
 
 const serializeItem = item => ({
     date_added: item.date_added,
@@ -13,11 +15,30 @@ const serializeItem = item => ({
     title: item.title
 });
 
-const Panel = inject('userStore')(observer((props) => {
+const Panel = inject('userStore', 'helpers')(observer((props) => {
     async function deleteListItems(id) {
         await ListsService.deleteListItem(id).then(res => {
             props.userStore.toggleListLoaded(false);
         })
+    }
+
+    async function deleteUserList(id) {
+        await ListsService.deleteUserList(id).then(res => {
+            props.userStore.toggleListLoaded(false);
+        })
+    }
+
+    async function addUserList(newList) {
+        await ListsService.addUserList(newList).then(res => {
+            props.userStore.toggleListLoaded(false);
+        })
+    }
+
+    function buildList(userInput) {
+        return {
+            "list_name": userInput,
+            "user_id": props.userStore.getUserId,
+        }
     }
 
     const logExpanded = () => {
@@ -81,7 +102,7 @@ const Panel = inject('userStore')(observer((props) => {
             expand_check = handleExpanded(props.userStore.getExpandedHistory, listData.id);
         }
 
-        return <ExpansionPanel key={uuid.v4()} defaultExpanded={props.userStore.getExpandedHistory.length > 0 === true ? expand_check.expanded : false}>
+        return <ExpansionPanel key={uuid.v4()} defaultExpanded={expand_check !== undefined ? props.userStore.getExpandedHistory.length > 0 === true ? expand_check.expanded : false : false}>
                     <ExpansionPanelSummary
                         className={"user-list-header"}
                         expandIcon={<ExpandMoreIcon />}
@@ -93,6 +114,21 @@ const Panel = inject('userStore')(observer((props) => {
                     >
                         {listData.list_name}
                     </Typography>
+                    <Grid container alignItems="flex-start" justify="flex-end" direction="row">
+                        <Button 
+                            id={listData.id}
+                            className="delete-list-button"
+                            color="secondary"
+                            variant="contained"
+                            type="submit"
+                            onClick={(e) => {
+                                props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
+                                deleteUserList(e.target.parentElement.id); // Delete the user list item
+                                props.userStore.setListMessageVisibility(); // Show the message box
+                                props.userStore.setListMessage("Successfully deleted list"); // Show a message indicating that the list was deleted
+                            }}
+                        >Delete List</Button>
+                    </Grid>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails 
                         key={uuid.v4()}
@@ -138,7 +174,62 @@ const Panel = inject('userStore')(observer((props) => {
             </ExpansionPanelDetails>
         </ExpansionPanel>
     });    
-    return pane;
+    return (
+    <Container>
+        <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.listMessage.visible)} content={props.userStore.listMessage.message} />
+        <Grid container className="add-user-list-form-container" alignItems="flex-start" justify="flex-end" direction="row">
+            <form className={props.userStore.userListInputFormVisibility}>
+                <FormControl>
+                    <TextField
+                        className="user-list-input"
+                        value={props.userStore.getUserListInput}
+                        onChange={(e) => {
+                            props.userStore.setUserListInput(e.target.value);
+                        }}
+                    />
+                    <FormHelperText id="user-list-input-label">Enter List Name</FormHelperText>
+                </FormControl>                       
+            </form>
+            <Grid className={props.userStore.addUserListToggleButtonVisibility}>
+                <Button 
+                    className="toggle-add-list-form-button"
+                    color="secondary"
+                    variant="contained"
+                    type="submit"
+                    onClick={(e) => {
+                        props.userStore.setExpandedHistory(logExpanded());
+                        props.userStore.setUserListInput("");
+                        props.userStore.setUserListInputFormVisibility();
+                        props.userStore.setAddUserListToggleButtonVisibility(); // Hide this button
+                        props.userStore.setAddUserListButtonVisibility(); // Show the submit button to actually add the list
+                        console.log("I activate the form");
+                    }}
+                >Add List
+                </Button>
+            </Grid>
+            <Grid className={props.userStore.addUserListButtonVisibility}>
+                <Button 
+                    className="add-list-form-button"
+                    color="secondary"
+                    variant="contained"
+                    type="submit"
+                    onClick={(e) => {
+                        props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
+                        addUserList(buildList(props.userStore.getUserListInput)); // Add the user list to the database
+                        props.userStore.setUserListInputFormVisibility(); // Hide the input form
+                        props.userStore.setAddUserListButtonVisibility(); // Hide this button
+                        props.userStore.setAddUserListToggleButtonVisibility();  // Show the button to bring up the form dialog again
+                        props.userStore.setListMessageVisibility(); // Show the message box
+                        props.userStore.setListMessage("Successfully added list"); // Show a message indicating that the list was added
+                        console.log("I add lists");
+                    }}
+                >Add List
+                </Button>
+            </Grid>
+        </Grid> 
+        {pane}
+    </Container>
+    );
 }));
 
 export default Panel;

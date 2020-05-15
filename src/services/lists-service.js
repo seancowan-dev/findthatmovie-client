@@ -25,7 +25,7 @@ const ListsService = {
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
-            body: listObj,
+            body: JSON.stringify(listObj),
         })
         .then(res => {
             return Helpers.handleErrors(res)

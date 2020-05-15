@@ -235,7 +235,7 @@ class Helpers {
         targetElement.parentElement.nextSibling.className = otherClasses + " " + newVisibility;
         return;
     }
-    checkCommentMessageVisible(state) {
+    checkMessageVisible(state) {
         if (state === true) {
             return "active"
         }

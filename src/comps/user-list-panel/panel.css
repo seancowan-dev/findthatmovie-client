@@ -1,0 +1,9 @@
+.active {
+    display: block;
+  }
+  .inactive {
+    display: none;
+  }
+.add-user-list-form-container {
+    padding-bottom: 10px;
+}

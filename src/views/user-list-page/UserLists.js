@@ -1,11 +1,6 @@
 import React from 'react';
 import Nav from '../../Nav/Nav';
 import { observer, inject } from 'mobx-react';
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper }  from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import uuid from 'uuid';
-import $ from 'jquery';
 import './UserLists.css';
 import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
@@ -48,7 +43,6 @@ const UserLists = inject('userStore')(observer((props) => {
         }
       })
     list = <Panel list_data={list_data}/>
-    
         return (<>
             <Nav />
             <div className="list-container">

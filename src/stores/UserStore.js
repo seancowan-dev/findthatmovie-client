@@ -16,7 +16,7 @@ class UserStore {
     
     // Account Page
     @observable userInformation = null;
-        // Getter for info
+        // Getters for info
         @computed get getUserInfo() {
             return this.userInformation;
         }
@@ -28,7 +28,45 @@ class UserStore {
         }
         @computed get getAccountUpdateDate() {
             return this.userInformation.updated_at;
-        }                      
+        }
+        
+    // Lists Page
+    @observable userListInput = "";
+        // Getters
+        @computed get getUserListInput() {
+            return this.userListInput;
+        }
+        // Setters
+        @action setUserListInput(input) {
+            this.userListInput = input;
+        }
+
+    @observable userListInputFormVisibility = "inactive";
+        // Getters
+        @computed get getUserListInputFormVisibility() {
+            return this.userListInputFormVisibility;
+        }
+        // Setters
+        @action setUserListInputFormVisibility() {
+            this.userListInputFormVisibility = this.userListInputFormVisibility === "active" ? "inactive" : "active";
+        } 
+        
+    @observable addUserListButtonVisibility = "inactive";
+    @observable addUserListToggleButtonVisibility = "active";
+            // Getters
+            @computed get getAddUserListButtonVisibility() {
+                return this.addUserListButtonVisibility;
+            }
+            @computed get getAddUserListToggleButtonVisibility() {
+                return this.addUserListToggleButtonVisibility;
+            }
+            // Setters
+            @action setAddUserListButtonVisibility() {
+                this.addUserListButtonVisibility = this.addUserListButtonVisibility === "active" ? "inactive" : "active";
+            } 
+            @action setAddUserListToggleButtonVisibility() {
+                this.addUserListToggleButtonVisibility = this.addUserListToggleButtonVisibility === "active" ? "inactive" : "active";
+            } 
     // Account Creation
     @observable newRegistrant = {
         username: "",
@@ -43,7 +81,38 @@ class UserStore {
         visible: false,
         message: ""
     }
-
+        // Setters
+        @action setCommentVisibility() {
+            this.commentMessage.visible === true ? this.commentMessage.visible = false : this.commentMessage.visible = true
+        }
+        @action setCommentMessage(input) {
+            this.commentMessage.message = input;
+        }
+        // Getters
+        @computed get getCommentMessage() {
+            return this.commentMessage.message;
+        }
+        @computed get getCommentVisibility() {
+            return this.commentMessage.visible;
+        }
+    @observable listMessage = {
+        visible: false,
+        message: ""
+    }
+        // Setters
+        @action setListMessageVisibility() {
+            this.listMessage.visible === true ? this.listMessage.visible = false : this.listMessage.visible = true
+        }
+        @action setListMessage(input) {
+            this.listMessage.message = input;
+        }
+        // Getters
+        @computed get getListMessage() {
+            return this.listMessage.message;
+        }
+        @computed get getListVisibility() {
+            return this.listMessage.visible;
+        }
     // Change Password
     @observable changePassword = {
         old: "",
@@ -197,19 +266,13 @@ class UserStore {
         SearchStore.readyForTrailer = true;
     }
       // Getter for movie comments
-      @computed get getMovieComments() {
-        return this.movieComments;
-      }
-    @action setCommentVisibility() {
-        this.commentMessage.visible === true ? this.commentMessage.visible = false : this.commentMessage.visible = true
-    }
-    @action setCommentMessage(input) {
-        this.commentMessage.message = input;
-    }
-
-    @computed get getCommentObject() {
-        return this.commentObject;
-    }
+        @computed get getMovieComments() {
+            return this.movieComments;
+        }
+      // Gett for comment object
+        @computed get getCommentObject() {
+            return this.commentObject;
+        }
 
     async postComment(targetElement, reply = false) {
         

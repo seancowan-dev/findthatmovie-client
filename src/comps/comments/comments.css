@@ -28,15 +28,12 @@
   .user-comments-header {
     background-color: rgb(157, 157, 157);
   }
-
-  .active {
-    display: block;
-  }
-
   .threaded {
     margin-left: 40px;
   }
-
+  .active {
+    display: block;
+  }
   .inactive {
     display: none;
   }

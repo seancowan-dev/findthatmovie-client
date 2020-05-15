@@ -268,7 +268,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
             <Header as='h3' dividing  key={uuid.v4()} >
               Comments
             </Header>
-            <Message key={uuid.v4()} floating className={props.helpers.checkCommentMessageVisible(props.userStore.commentMessage.visible)} content={props.userStore.commentMessage.message} />
+            <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.commentMessage.visible)} content={props.userStore.commentMessage.message} />
             {comments}
           <Form reply key={uuid.v4()}>
             <Form.TextArea key={uuid.v4()} />
