@@ -9,12 +9,6 @@ import uuid from 'uuid';
 import ListsService from '../../services/lists-service';
 import './panel.css';
 
-const serializeItem = item => ({
-    date_added: item.date_added,
-    id: item.id,
-    title: item.title
-});
-
 const Panel = inject('userStore', 'helpers')(observer((props) => {
     async function deleteListItems(id) {
         await ListsService.deleteListItem(id).then(res => {
@@ -63,7 +57,6 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
     let pane = props.list_data.map((listData, idx) => {
 
         let items;
-        let expanded = "";
         let expand_check = false; 
         if (listData.items !== false) {
             items = listData.items.map(row => {
@@ -98,11 +91,11 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
             });
         }
 
-        if (props.userStore.getExpandedHistory.length > 0 === true) {
+        if (props.userStore.getExpandedHistory.length > 0) {
             expand_check = handleExpanded(props.userStore.getExpandedHistory, listData.id);
         }
 
-        return <ExpansionPanel key={uuid.v4()} defaultExpanded={expand_check !== undefined ? props.userStore.getExpandedHistory.length > 0 === true ? expand_check.expanded : false : false}>
+        return <ExpansionPanel key={uuid.v4()} defaultExpanded={expand_check !== undefined ? props.userStore.getExpandedHistory.length > 0 ? expand_check.expanded : false : false}>
                     <ExpansionPanelSummary
                         className={"user-list-header"}
                         expandIcon={<ExpandMoreIcon />}

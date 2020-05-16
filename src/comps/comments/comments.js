@@ -124,8 +124,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
               >
                 <Comment.Author  
                   key={uuid.v4()} 
-                  as='a' 
-                  key={uuid.v4()}>
+                  as='a'>
                     {reply.rep_user}
                 </Comment.Author>
                 <Comment.Metadata 

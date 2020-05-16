@@ -6,12 +6,6 @@ import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
 import Panel from '../../comps/user-list-panel/panel';
 
-const serializeItem = item => ({
-    date_added: item.date_added,
-    id: item.id,
-    title: item.title
-});
-
 let list;
 
 const UserLists = inject('userStore')(observer((props) => {
@@ -19,7 +13,7 @@ const UserLists = inject('userStore')(observer((props) => {
         await ListsService.getUserLists(TokenService.readJwtToken().user_id)
         .then(res => {
             props.userStore.setUserLists(res); // Get user list
-            props.userStore.toggleListLoaded(true); // Set loading to tru
+            props.userStore.toggleListLoaded(true); // Set loading to true
         });
     }
     if (props.userStore.listLoaded !== true) {
@@ -41,6 +35,7 @@ const UserLists = inject('userStore')(observer((props) => {
             pushObj.items = val;  // Push other vals into items property
             list_data.push(pushObj); // Push to list_data
         }
+        return null;
       })
     list = <Panel list_data={list_data}/>
         return (<>

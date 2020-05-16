@@ -41,6 +41,13 @@
     margin: 10px;
   }
 
+  .active {
+    display: block;
+  }
+  .inactive {
+    display: none;
+  }
+
   @media screen and (min-width: 1200px) {
     .movie-poster {
         max-width: 300px;

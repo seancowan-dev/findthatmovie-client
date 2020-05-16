@@ -1,12 +1,7 @@
-import React from 'react';
-import { observable, action, computed, trace } from 'mobx';
-import { Button, Comment, Form } from 'semantic-ui-react'
+import { observable, action, computed } from 'mobx';
 import ListsService from '../services/lists-service';
 import TokenService from '../services/token-service';
 import CommentsService from '../services/comments-service';
-import Helpers from './Helpers';
-import uuid from 'uuid';
-import moment from 'moment';
 import SearchStore from './SearchStore';
 
 class UserStore {
@@ -14,6 +9,44 @@ class UserStore {
     @observable currentId = "";
     @observable userLists = null;
     
+    //Admins
+    @observable currentlyDeletingUserId = "";
+        //Getter
+        @computed get getCurrentlyDeletingUserId() {
+            return this.currentlyDeletingUserId;
+        }
+        //Setter
+        @action setCurrentlyDeletingUserId(value) {
+            this.currentlyDeletingUserId = value;
+        }         
+    @observable adminListLoaded = false;
+        //Getter
+        @computed get getAdminListLoaded() {
+            return this.adminListLoaded;
+        }
+        //Setter
+        @action setAdminListLoaded(value) {
+            this.adminListLoaded = value;
+        }        
+    @observable adminUserList = null;
+        //Getter
+        @computed get getAdminUserList() {
+            return this.adminUserList;
+        }
+        //Setter
+        @action setAdminUserList(newList) {
+            this.adminUserList = newList;
+        }
+    @observable adminDeleteUserModalVisibility = false;
+        // Getters
+        @computed get getAdminDeleteUserModalVisibility() {
+            return this.adminDeleteUserModalVisibility;
+        }
+        // Setters
+        @action setAdminDeleteUserModalVisibility() {
+            this.adminDeleteUserModalVisibility = this.adminDeleteUserModalVisibility === true ? false : true;
+        }
+        
     // Account Page
     @observable userInformation = null;
         // Getters for info
@@ -28,6 +61,9 @@ class UserStore {
         }
         @computed get getAccountUpdateDate() {
             return this.userInformation.updated_at;
+        }
+        @computed get getUserPermLevel() {
+            return this.userInformation.perm_level;
         }
         
     // Lists Page
@@ -112,6 +148,24 @@ class UserStore {
         }
         @computed get getListVisibility() {
             return this.listMessage.visible;
+        }
+    @observable adminPanelMessage = {
+        visible: false,
+        message: ""
+    }
+        // Setters
+        @action setAdminPanelMessageVisibility() {
+            this.adminPanelMessage.visible === true ? this.adminPanelMessage.visible = false : this.adminPanelMessage.visible = true
+        }
+        @action setAdminPanelMessage(input) {
+            this.adminPanelMessage.message = input;
+        }
+        // Getters
+        @computed get getAdminPanelMessage() {
+            return this.adminPanelMessage.message;
+        }
+        @computed get getAdminPanelMessageVisibility() {
+            return this.adminPanelMessage.visible;
         }
     // Change Password
     @observable changePassword = {
@@ -305,6 +359,7 @@ class UserStore {
                 if (splitReply.reply.replying_to === entry.com.id) {
                   return splitReply.reply;
                 }
+                return null;
               });
               return entry.com; // Return the completed comment object
             });

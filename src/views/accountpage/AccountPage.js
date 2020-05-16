@@ -4,7 +4,6 @@ import Nav from '../../Nav/Nav';
 import { observer, inject } from 'mobx-react';
 import UserService from '../../services/users-service';
 import TokenService from '../../services/token-service';
-import ListsService from '../../services/lists-service';
 
 const AccountPage = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
     if (props.userStore.loginInfo.authenticated === false) {

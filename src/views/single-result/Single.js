@@ -4,7 +4,6 @@ import Result from '../../Results/Result/Result';
 import Nav from '../../Nav/Nav';
 import UserService from '../../services/users-service';
 import TokenService from '../../services/token-service';
-import CommentsService from '../../services/comments-service';
 import { observer, inject } from 'mobx-react';
 
 const Single = inject('userStore', 'searchStore', 'helpers')(observer((props) => {

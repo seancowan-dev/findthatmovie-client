@@ -19,6 +19,26 @@ class SearchStore {
          noLoad: false
     }
 
+    // Validation
+    @observable addListMessage = {
+        visible: false,
+        message: ""
+    }
+        // Setters
+        @action setAddListVisibility() {
+            this.addListMessage.visible === true ? this.addListMessage.visible = false : this.addListMessage.visible = true
+        }
+        @action setAddListMessage(input) {
+            this.addListMessage.message = input;
+        }
+        // Getters
+        @computed get getAddListMessage() {
+            return this.addListMessage.message;
+        }
+        @computed get getAddListVisibility() {
+            return this.addListMessage.visible;
+        }    
+
         // Search States
     @observable page = 0;
     @observable pageOld = null;

@@ -3,8 +3,6 @@ import { observer, inject } from 'mobx-react';
 import { A } from 'hookrouter';
 import debounce from 'lodash.debounce';
 import SearchStore from '../stores/SearchStore';
-import UserService from '../services/users-service';
-import TokenService from '../services/token-service';
 import './Results.css';
 
 function checkPoster(object) {

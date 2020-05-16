@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, runInAction } from 'mobx';
+import { action } from 'mobx';
 import { navigate, A } from 'hookrouter';
 import CommentsService from '../services/comments-service';
 import AuthApiService from '../services/auth-api-service';

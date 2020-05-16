@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
 import DomainStore from './DomainStore';
 import TokenService from './services/token-service';
 import IdleService from './services/idle-service';
 import AuthApiService from './services/auth-api-service';
-import uuid from 'uuid';
-import { useRoutes, A, navigate } from 'hookrouter';
+import { useRoutes } from 'hookrouter';
 import Routes from './routing/Routing';
 import './App.css';
 

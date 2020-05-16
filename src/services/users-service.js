@@ -18,6 +18,21 @@ const UserService = {
             console.error(err)
         })
     },
+    async getAllUsers() {
+        return await fetch(`${config.API_ENDPOINT}/users/getAllUsers?api_key=${config.CLIENT_API_KEY}`, { 
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}` 
+            },
+        })
+        .then(res => {
+            return Helpers.handleErrors(res)
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    },
     async getUserInfo(id) {
         return await fetch(`${config.API_ENDPOINT}/users/info/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'GET',
@@ -41,6 +56,18 @@ const UserService = {
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
             body: info
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    },
+    async deleteUser(id) {
+        return await fetch(`${config.API_ENDPOINT}/users/delete/${id}?api_key=${config.CLIENT_API_KEY}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            }
         })
         .catch(err => {
             console.error(err)

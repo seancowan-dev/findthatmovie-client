@@ -7,10 +7,12 @@ import LoginPage from '../views/loginpage/LoginPage';
 import AccountPage from '../views/accountpage/AccountPage';
 import UserLists from '../views/user-list-page/UserLists';
 import SingleList from '../views/singlelist/SingleList';
+import AdminPage from '../views/AdminPage/AdminPage';
 import Logout from '../views/logout/logout';
 
 const routes = {
     "/": () => <Primary />,
+    "/adminPanel": () => <AdminPage />,
     "/results": () => <Multi />,
     "/results/:title": ({title}) => <Single title={title} />,
     "/register": () => <Registration />,
