@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
 import DomainStore from './DomainStore';
@@ -27,7 +27,9 @@ window.addEventListener("load", (e) => {
 })
 
 const App = (props) => {
-  const logoutFromIdle = () => {
+  const useForceUpdate = () => useState()[1];
+
+  const LogoutFromIdle = () => {
     /* remove the token from localStorage */
     TokenService.clearAuthToken()
     /* remove any queued calls to the refresh endpoint */
@@ -38,14 +40,14 @@ const App = (props) => {
     //   react won't know the token has been removed from local storage,
     //   so we need to tell React to rerender
     // */
-
+    useForceUpdate();
   }
   useEffect(() => {
     /*
       set the function (callback) to call when a user goes idle
       we'll set this to logout a user when they're idle
     */
-   IdleService.setIdleCallback(logoutFromIdle);
+   IdleService.setIdleCallback(LogoutFromIdle);
     
    /* if a user is logged in */
    if (TokenService.hasAuthToken()) {
