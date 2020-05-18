@@ -43,6 +43,10 @@ class SearchStore {
     @observable page = 0;
     @observable pageOld = null;
     @observable total_pages = null;
+        //Getters
+            @computed get getCurrentPage() {
+                return this.page;
+            }
     @observable loading = true;
         //Getters
             @computed get getLoading() {
@@ -246,7 +250,7 @@ class SearchStore {
                 .then(response => Helpers.handleErrors(response)) // Check data
                 .then(responseJSON => {
                     responseJSON.length = responseJSON.results.length;
-                    responseJSON.total_results = responseJSON.results.length;
+                    this.total_pages = responseJSON.total_pages;
                     responseJSON.page = Helpers.checkPageCount(responseJSON.results.length);
                     return responseJSON // return JSON
                 })

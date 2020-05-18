@@ -112,7 +112,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
   if (props.searchStore.readyForTrailer === true) {  // If the page is ready for trailers it is also ready for comments
     let tree = props.userStore.makeTreedComments(props.userStore.getMovieComments); // Grab the comments tree from the store
     comments = tree.map(commentObj => {  // Comments will only be one level deep so no need for reply button on replies
-      if (commentObj.replies[0] !== undefined) { // Only map replies if the comments object has replies
+      if (commentObj.replies[0] !== null) { // Only map replies if the comments object has replies
         replyObj = commentObj.replies.map(reply => { // Map the replies
           return (  // For each reply build and return appropriate ui elements
             <Comment 
@@ -262,7 +262,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
     })
   }
     return (  // Build the boilerplate for the the ui elements and input the comments
-        <Container key={uuid.v4()} className="user-comments-container">
+        <div key={uuid.v4()} className="user-comments-container">
           <Comment.Group key={uuid.v4()}>
             <Header as='h3' dividing  key={uuid.v4()} >
               Comments
@@ -283,14 +283,8 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
             }}/>
           </Form>
         </Comment.Group>
-      </Container>
+      </div>
     );
 }));
-
-// Pull stylesheet for semantic UI - this is the method directly from their documentation
-const styleLink = document.createElement("link");
-styleLink.rel = "stylesheet";
-styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
-document.head.appendChild(styleLink);
 
 export default Comments;

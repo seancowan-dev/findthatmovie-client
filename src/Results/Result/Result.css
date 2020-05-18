@@ -35,10 +35,8 @@
       margin: 10px;
   }
 
-  .movie-poster {
-    max-width: 30vw;
-    float: left;
-    margin: 10px;
+  .single-movie-header-item {
+    background-color: rgb(163, 163, 163);
   }
 
   .active {

@@ -1,9 +1,11 @@
 import React from 'react';
 import Comments from '../../comps/comments/comments';
 import Cast from '../../comps/cast/cast';
+import Item from './comps/Item';
 import ListMenu from '../../comps/add-list-menu/Menu';
 import { Message } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
+import { Container } from 'semantic-ui-react';
 import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
 import uuid from 'uuid';
@@ -27,6 +29,7 @@ function budget(budg) {
 const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) => {
     let details;
     let addMenu;
+    
     async function handleUserLists() {
         await ListsService.getUserLists(TokenService.readJwtToken().user_id)
         .then(res => {
@@ -34,7 +37,7 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
             props.userStore.toggleListLoaded(true); // Set loading to tru
         });
     }
-    if (props.userStore.listLoaded !== true) {
+    if (props.userStore.listLoaded !== true && props.userStore.getAuthenticated === true) {
         handleUserLists();
     }
     if (props.searchStore.getDetailedInfo !== undefined) {
@@ -60,10 +63,15 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
             return null;
           })
         addMenu = <ListMenu list_data={list_data}/>
+        
     }
     if (props.searchStore.getLoading === false) {
+        let movieHeadItem = {
+            src: checkPoster(props.searchStore.getPoster),
+            overview: props.searchStore.getOverview
+        }
         return (
-            <div className="single-movie-results" key={uuid.v4()}>
+            <Container className="single-movie-results" key={uuid.v4()}>
                 <div className="single-movie-heading" key={uuid.v4()}>
                     <h2>{props.searchStore.getOriginalTitle}</h2>
                     <h3>{details.tagline}</h3>
@@ -75,17 +83,18 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
                 <div className="single-movie-budglength" key={uuid.v4()}>
                     <p className="budget-para">{budget(details.budget)}</p>
                     <p className="budget-para">{details.runtime} mins</p>
-                    {addMenu}
+                    {props.userStore.getAuthenticated === true ? addMenu : ""}
                 </div>
-                <div className="single-movie-info">
-                    <div className="single-movie-text">
-                        <img className="movie-poster" src={checkPoster(props.searchStore.getPoster)} alt="Poster of Movie"/>
-                        <p className="single-movie-description">{props.searchStore.getOverview}</p>
-                    </div>
-                    <Cast info={props.searchStore.getDetailedInfo} />
-                    <Comments />
-                </div>
-            </div>
+                <Container key={uuid.v4()} className="single-movie-info">
+                    <Item movieHeadItem={movieHeadItem} />
+                    <Container text>
+                        <Cast info={props.searchStore.getDetailedInfo} />
+                    </Container>
+                    <Container text>
+                        <Comments />
+                    </Container>
+                </Container>
+            </Container>
         );
     }
     return (

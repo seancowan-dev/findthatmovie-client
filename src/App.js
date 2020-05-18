@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { navigate } from 'hookrouter';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
 import DomainStore from './DomainStore';
 import TokenService from './services/token-service';
 import IdleService from './services/idle-service';
 import AuthApiService from './services/auth-api-service';
-import { useRoutes } from 'hookrouter';
-import Routes from './routing/Routing';
 import './App.css';
 
 const store = {
@@ -27,7 +26,7 @@ window.addEventListener("load", (e) => {
 })
 
 const App = (props) => {
-  const useForceUpdate = () => useState()[1];
+  const [dummy, reload] = useState(false);
 
   const LogoutFromIdle = () => {
     /* remove the token from localStorage */
@@ -40,7 +39,7 @@ const App = (props) => {
     //   react won't know the token has been removed from local storage,
     //   so we need to tell React to rerender
     // */
-    useForceUpdate();
+    navigate("/logout");
   }
   useEffect(() => {
     /*
@@ -81,13 +80,20 @@ const App = (props) => {
     };
   });
 
-  const routeResult = useRoutes(Routes); 
+  
   return(
     <Provider {...store}>
       <ErrorBound>
-        {routeResult}
+        {props.routes}
       </ErrorBound>
     </Provider>
     );
 };
+
+// Pull stylesheet for semantic UI - this is the method directly from their documentation
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
+
 export default App;
