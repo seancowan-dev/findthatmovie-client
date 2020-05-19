@@ -54,8 +54,14 @@
 
 .search-results-container {
     display: grid;
-    grid-template-columns: repeat(5, 17%);
     justify-content: space-around;
 }
+
+@media screen and (min-width: 1200px) {
+    .search-results-container {
+        grid-template-columns: repeat(5, 17%);
+    }
+}
+
 
 
