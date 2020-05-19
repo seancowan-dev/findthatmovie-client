@@ -11,7 +11,7 @@ const Multi = observer((props) => {
         <div className="parallax"></div>
         {<div className="search-form-container"><Search /></div>}
         <div className="results"><Results /></div>
-    </>
+    </> 
 });
 
 export default Multi;

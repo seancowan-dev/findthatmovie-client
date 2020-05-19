@@ -12,7 +12,8 @@ const store = {
   dataStore: DomainStore.dataStore,
   searchStore: DomainStore.searchStore,
   helpers: DomainStore.helpers,
-  userStore: DomainStore.userStore
+  userStore: DomainStore.userStore,
+  validators: DomainStore.validators
 }
 
 window.addEventListener("load", (e) => {

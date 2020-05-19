@@ -1,14 +1,18 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { Button, FormControl, TextField, Container } from '@material-ui/core';
+import UserService from '../services/users-service';
+import { Button, FormControl, TextField } from '@material-ui/core';
+import { Container } from 'semantic-ui-react';
 import { navigate, A } from 'hookrouter';
+import { Message } from 'semantic-ui-react';
 import bcrypt from 'bcryptjs';
 import moment from 'moment';
 import $ from 'jquery';
 import './Register.css';
-import UserService from '../services/users-service';
+import uuid from 'uuid';
 
-const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
+
+const Register = inject('userStore', 'validators', 'helpers')(observer((props) => {
     
     const style = {
         readOnly: {
@@ -16,10 +20,15 @@ const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) =>
         }
     }
     
-    return <form className="create-account-form">
-        <Container maxWidth="sm">
+    return <Container>
+        <form className="create-account-form">
             <fieldset className="create-account-user-info">
                 <h1>Create New Account</h1>
+                <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.validators.registration.visible)} warning>
+                    <Message.Header>{props.validators.registration.message}</Message.Header>
+                    <Message.List items={Array.from(props.validators.arrayMsgs)} />
+                </Message>
+                {/* content={props.validators.registration.message} */}
                 <FormControl>
                     <TextField 
                         InputProps={style.readOnly}
@@ -100,35 +109,46 @@ const Register = inject('dataStore', 'userStore', 'helpers')(observer((props) =>
                             password: props.userStore.newRegistrant.password,
                             passwordConfirm: props.userStore.newRegistrant.confirmPassword
                         }
-                        console.log(data);
-                        // Perform Validations - Need to add more validations for final version
-                        if (props.helpers.registrationValidator(data) === true) {
-                            // let arr = props.dataStore.temporaryAccounts.slice();
 
-                            bcrypt.hash(props.userStore.newRegistrant.password, 8, function(err, hash) {
-                                let confirmed = {
-                                    "name": props.userStore.newRegistrant.username,
-                                    "password": hash,
-                                    "email": props.userStore.newRegistrant.email,
-                                    "perm_level": "user",
-                                    "created_at": moment().format()
-                                }
-                                console.log(JSON.stringify(confirmed));
-                                UserService.addUser(JSON.stringify(confirmed));
-                                navigate("/login");
-                            });
+                        // Perform Validations
+                        let validator_object = props.validators.registrationValidator(data);
+                        
+                        if (validator_object[0] === undefined) { 
+                            // If a reference to index 0 of the array returns undefined then no errors were generated
 
-                        } else {
-                            // This is where form validation functions will be put, for now just alert the user
-                            alert('Please confirm that password and email match');
+                            // Just to be sure verify that valid was returned true
+                            if (validator_object.valid === true) {
+                                // If we reach this point we should create the user's account
+                                bcrypt.hash(props.userStore.newRegistrant.password, 8, function(err, hash) {
+                                    let confirmed = {
+                                        "name": props.userStore.newRegistrant.username,
+                                        "password": hash,
+                                        "email": props.userStore.newRegistrant.email,
+                                        "perm_level": "user",
+                                        "created_at": moment().format()
+                                    }
+                                    console.log(JSON.stringify(confirmed));
+                                    UserService.addUser(JSON.stringify(confirmed));
+                                    navigate("/login");
+                                });
+                            }
+
+                        } else { // If we reach this point we should list all the errors for the user
+                            console.log(validator_object);
+                            props.validators.setRegistrationVisibility(true);
+                            let arrayMsgs = [];
+                            validator_object.map(item => {
+                                arrayMsgs.push(item.message);
+                            })
+                            props.validators.setRegistrationMessage("We detected the following issues with your registration")
+                            props.validators.setRegistrationMessageArray(arrayMsgs);
                         }
                     }}>Create Account</Button>
+                    <p>Already have an account? <A href="/login">Click here</A></p>
                 </FormControl>
-                <p>Already have an account? <A href="/login">Click here</A></p>
             </fieldset>
-            
-        </Container>
-    </form>
+        </form>
+    </Container>
 }));
 
 export default Register;

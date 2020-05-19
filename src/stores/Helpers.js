@@ -51,25 +51,6 @@ class Helpers {
         // }
     }
 
-    registrationValidator(inputObject) {
-        let valid = false;
-
-        // if (someFunctionToCheckForSafeName(inputObject.userName)) {
-            //Eventually this will check for worksafe or duplicate usernames
-        // }
-        if (inputObject.email === inputObject.emailConfirm) {
-            if (inputObject.password === inputObject.passwordConfirm) {
-                // If we reach here email and passwords both match, validate registration
-                valid = true;
-                return valid;
-            } else {
-                return valid;
-            }
-        } else {
-            return valid;
-        }
-    }
-
     checkOutput(output, parsed) { 
         // If there is something in 'output' then results have already been trimmed, and should not be trimmed again from there
         // Otherwise the originally parsedResults received from API should be used as this is the first trim
@@ -132,16 +113,20 @@ class Helpers {
         };
         // Create user auth token and store on client
         AuthApiService.postLogin({name: data.userName, password: data.password}).then(res => {
-            TokenService.saveAuthToken(res.authToken);       
-            // Cleanup user info
-            UserStore.cleanupUserLogin(res.authToken);                                    
+            if (res !== undefined) {
+                // Save the user auth token
+                TokenService.saveAuthToken(res.authToken);       
+                // Cleanup user info
+                UserStore.cleanupUserLogin(res.authToken);
+                // Store important user states
+                UserStore.setAuthenticated(true);
+                UserStore.setAuthenticatedUser(data.userName);
+                // Build fragment for links
+                let links = this.makeLoginLinks(UserStore);
+                UserStore.setValidNavLinks(links.links); 
+            }                   
         });
-        // Store important user states
-        UserStore.setAuthenticated(true);
-        UserStore.setAuthenticatedUser(data.userName);
-        // Build fragment for links
-        let links = this.makeLoginLinks(UserStore);
-        UserStore.setValidNavLinks(links.links);
+
     }
     checkVisible(targetElement) {
         let len = targetElement.offsetParent.children[1].children.length;

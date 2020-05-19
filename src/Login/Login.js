@@ -1,14 +1,17 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Button, FormControl, TextField, Container } from '@material-ui/core';
+import { Message } from 'semantic-ui-react';
 import { navigate, A } from 'hookrouter';
+import uuid from 'uuid';
 import './Login.css';
 
-const Login = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
+const Login = inject('dataStore', 'userStore', 'helpers', 'validators')(observer((props) => {
     return <form className="login-account-form">
         <Container maxWidth="sm">
             <fieldset className="login-account-info">
-                <h1>Create New Account</h1>
+                <h1>Enter Credentials</h1>
+                <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.validators.login.visible)} content={props.validators.login.message} warning />
                 <FormControl>
                     <TextField 
                         label="Enter username"

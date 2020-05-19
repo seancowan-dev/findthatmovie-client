@@ -94,7 +94,10 @@
     "preserve": "npm run build"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+            "no-useless-escape": "off"
+    }
   },
   "browserslist": {
     "production": [

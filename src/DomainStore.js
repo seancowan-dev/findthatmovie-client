@@ -2,6 +2,7 @@ import DataStore from './stores/DataStore';
 import SearchStore from './stores/SearchStore';
 import UserStore from './stores/UserStore';
 import Helpers from './stores/Helpers';
+import Validators from './stores/Validators';
 
 class DomainStore{
   // Import external stores
@@ -10,6 +11,7 @@ class DomainStore{
     this.searchStore = SearchStore;
     this.helpers = Helpers;
     this.userStore = UserStore;
+    this.validators = Validators;
   }
 
   // Local methods to use with fetch api methods
