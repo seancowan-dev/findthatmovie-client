@@ -7,6 +7,7 @@ const UserService = {
         return await fetch(`${config.API_ENDPOINT}/users/add?api_key=${config.CLIENT_API_KEY}`, {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
             },
             body: confirmedInfo
@@ -22,6 +23,7 @@ const UserService = {
         return await fetch(`${config.API_ENDPOINT}/users/getAllUsers?api_key=${config.CLIENT_API_KEY}`, { 
             method: 'GET',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}` 
             },
@@ -37,6 +39,7 @@ const UserService = {
         return await fetch(`${config.API_ENDPOINT}/users/info/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'GET',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}` 
             },
@@ -52,6 +55,7 @@ const UserService = {
         return await fetch(`${config.API_ENDPOINT}/users/update/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'PATCH',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
@@ -65,6 +69,7 @@ const UserService = {
         return await fetch(`${config.API_ENDPOINT}/users/delete/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'DELETE',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             }

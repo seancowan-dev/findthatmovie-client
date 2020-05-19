@@ -8,6 +8,7 @@ const AuthApiService = {
         return await fetch(`${config.API_ENDPOINT}/users/login?api_key=f36d54c6-47c9-43de-aa5a-835ae17bdaba`, {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
             },
             body: JSON.stringify({name, password}),
@@ -27,6 +28,7 @@ const AuthApiService = {
         return await fetch(`${config.API_ENDPOINT}/users/refresh?api_key=f36d54c6-47c9-43de-aa5a-835ae17bdaba`, {
           method: 'POST',
           headers: {
+            'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
             'authorization': `Bearer ${TokenService.getAuthToken()}`,
           },
         })
