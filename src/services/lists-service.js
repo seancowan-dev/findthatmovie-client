@@ -7,6 +7,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/getList/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'GET',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
@@ -22,6 +23,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/add?api_key=${config.CLIENT_API_KEY}`, {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
@@ -38,6 +40,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/addItem?api_key=${config.CLIENT_API_KEY}`, {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
@@ -54,6 +57,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/deleteList/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'DELETE',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             }
@@ -69,6 +73,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/deleteListItem/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'DELETE',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             }
@@ -84,6 +89,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/updateList/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'PATCH',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
@@ -100,6 +106,7 @@ const ListsService = {
         return await fetch(`${config.API_ENDPOINT}/lists/updateListItem/${id}?api_key=${config.CLIENT_API_KEY}`, {
             method: 'PATCH',
             headers: {
+                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },

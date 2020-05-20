@@ -46,9 +46,9 @@ class Helpers {
         if (response.ok === true) {
             return response.json();
         } 
-        // else {
-        //     throw new Error("Code " + response.status + " Message: " + response.statusText)
-        // }
+        else {
+            console.warn(`Code: ${response.status} Message: ${response.statusText}`);
+        }
     }
 
     checkOutput(output, parsed) { 
