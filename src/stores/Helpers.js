@@ -269,12 +269,17 @@ class Helpers {
                     res.userStatus = "allowed"
                 }
                 if (UserStore.userInformation.perm_level === "user") { // If user perform comment level checks
-                    
-                    if (res.comments.comment.user_id === UserStore.userInformation.user_id ){
-                        res.userStatus = "allowed"
-                    }
-                    if (res.comments.replies.user_id === UserStore.userInformation.user_id ){
-                        res.userStatus = "allowed"
+                    if (res.comments !== undefined) {
+                        if (res.comments.comment !== undefined) {
+                            if (res.comments.comment.user_id === UserStore.userInformation.user_id ){
+                                res.userStatus = "allowed"
+                            }
+                        }
+                        if (res.comments.replies !== undefined) {
+                            if (res.comments.replies.user_id === UserStore.userInformation.user_id ){
+                                res.userStatus = "allowed"
+                            }
+                        }
                     }
                 }
             }
