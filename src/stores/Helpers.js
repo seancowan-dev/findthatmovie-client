@@ -165,34 +165,33 @@ class Helpers {
         targetElement.offsetParent.children[1].children[len - 1].className = otherClasses + " " + newVisibility;
         return;
       }
-    checkVisibleEdit(targetElement) {
-        let currentClass = targetElement.parentElement.nextSibling.className;
-        console.log(currentClass);
-        let otherClasses;
-        let visibleClass;
-        let strPos;
-        currentClass.search("inactive") !== -1 ? strPos = currentClass.search("inactive") : strPos = false;
+    // checkVisibleEdit(targetElement) {
+    //     let currentClass = targetElement.parentElement.nextSibling.className;
+    //     let otherClasses;
+    //     let visibleClass;
+    //     let strPos;
+    //     currentClass.search("inactive") !== -1 ? strPos = currentClass.search("inactive") : strPos = false;
 
-        if (strPos !== false) { // inactive is a class name
-          otherClasses = currentClass.slice(0, strPos - 1);
-          visibleClass = currentClass.slice(strPos, currentClass.length);
-        }
-        if (strPos === false) {
-          currentClass.search("active") !== -1 ? strPos = currentClass.search("active") : strPos = false;
-          if (strPos !== false) { // inactive is a class name
-            otherClasses = currentClass.slice(0, strPos - 1);
-            visibleClass = currentClass.slice(strPos, currentClass.length);
-          }
-        }
+    //     if (strPos !== false) { // inactive is a class name
+    //       otherClasses = currentClass.slice(0, strPos - 1);
+    //       visibleClass = currentClass.slice(strPos, currentClass.length);
+    //     }
+    //     if (strPos === false) {
+    //       currentClass.search("active") !== -1 ? strPos = currentClass.search("active") : strPos = false;
+    //       if (strPos !== false) { // inactive is a class name
+    //         otherClasses = currentClass.slice(0, strPos - 1);
+    //         visibleClass = currentClass.slice(strPos, currentClass.length);
+    //       }
+    //     }
 
-        let newVisibility;
-        visibleClass === "active" ? newVisibility = "inactive" : newVisibility = "active";
+    //     let newVisibility;
+    //     visibleClass === "active" ? newVisibility = "inactive" : newVisibility = "active";
 
-        let comment = UserStore.getEditComment
-        targetElement.parentElement.nextSibling.children[0].children[0].value = comment.comment;
-        targetElement.parentElement.nextSibling.className = otherClasses + " " + newVisibility;
-        return;
-    }
+    //     let comment = UserStore.getEditComment
+    //     targetElement.parentElement.nextSibling.children[0].children[0].value = comment.comment;
+    //     targetElement.parentElement.nextSibling.className = otherClasses + " " + newVisibility;
+    //     return;
+    // }
     checkVisibleEditReply(targetElement) {
         let currentClass = targetElement.parentElement.nextSibling.className;
         let otherClasses;
@@ -260,6 +259,7 @@ class Helpers {
             }
         }
         let returnObject = CommentsService.getCommentById(comment_id).then(res => {
+            
             res.userStatus = "noaccess";
             if (ifExists(res.comments) === true || ifExists(res.replies) === true) {
                 if (UserStore.userInformation.perm_level === "admin") { // First check if the user is an admin, admins can always delete or edit
@@ -269,14 +269,17 @@ class Helpers {
                     res.userStatus = "allowed"
                 }
                 if (UserStore.userInformation.perm_level === "user") { // If user perform comment level checks
+
                     if (res.comments !== undefined) {
                         if (res.comments.comment !== undefined) {
-                            if (res.comments.comment.user_id === UserStore.userInformation.user_id ){
+                            if (res.comments.user_id === UserStore.userInformation.id){ 
                                 res.userStatus = "allowed"
                             }
                         }
-                        if (res.comments.replies !== undefined) {
-                            if (res.comments.replies.user_id === UserStore.userInformation.user_id ){
+                    }
+                    if (res.replies !== undefined) {
+                        if (res.replies.comment !== undefined) {
+                            if (res.replies.user_id === UserStore.userInformation.id){ 
                                 res.userStatus = "allowed"
                             }
                         }

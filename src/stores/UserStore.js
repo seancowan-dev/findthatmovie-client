@@ -218,9 +218,9 @@ class UserStore {
         @computed get getLoaded() {
             return this.loginInfo.loaded;
         }  
-        // @computed get getUsername() {
-        //     return this.loginInfo.username;
-        // }        
+        @computed get getUsername() {
+            return this.loginInfo.username;
+        }        
         @computed get getPassword() {
             return this.loginInfo.password;
         }      

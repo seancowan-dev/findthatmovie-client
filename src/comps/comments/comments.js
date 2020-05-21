@@ -86,7 +86,6 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
     const editReplyComment = (target_for_id, base_target, target_for_class, comment = false) => { // Validation for editing replies or comments
       // Comment is false for replies and true for comments
       let id = target_for_id.id
-
       props.helpers.checkUserPerms(id).then(res => {
         if (res.userStatus === "allowed") { // If they are allowed
           if (res.comments) { // Check if there is a comment matching the id in the list of this user's comments
@@ -143,9 +142,9 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                   <Comment.Action 
                     key={uuid.v4()} 
                     as='button' 
-                    className="comment-edit" 
+                    className="reply-edit" 
                     onClick={(e) => {
-                      editReplyComment(e.target.parentElement.parentElement.offsetParent, e.target, e.target.parentElement.parentElement.parentElement.parentElement)
+                      editReplyComment(e.target.parentElement.parentElement.offsetParent, e.target, e.target.parentElement.parentElement.parentElement.parentElement, false)
                       }}>Edit
                   </Comment.Action>
                   <Comment.Action 
@@ -240,7 +239,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                   </Form>
         </Comment.Content>
         <Comment.Group key={uuid.v4()} threaded>
-          {commentObj.replies[0] !== undefined ? replyObj : ""}
+          {commentObj.replies[0] !== null ? replyObj : ""}
           <Form key={uuid.v4()} reply className={"inactive"}>
                     <Form.TextArea key={uuid.v4()} />
                     <Button
@@ -251,6 +250,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                       primary
                       onClick={(e) => {
                         let comment = serializeComment(e.target, true);
+                        console.log(comment);
                         addComments(comment);
                      }}/>
                   </Form>
