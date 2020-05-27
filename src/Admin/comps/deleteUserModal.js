@@ -21,7 +21,7 @@ const DeleteUserModal = inject('userStore')(observer((props) => {
         <Modal.Content>
         <Modal.Description>
             <p>You are about to delete a user are you sure you want to do this?</p>
-            <Button 
+            <button 
                 onClick={(e) => {
                     props.userStore.adminDeleteUserModalVisibility = false; // Hide this modal
                     deleteThisUser(props.userStore.getCurrentlyDeletingUserId); // Delete the user
@@ -31,8 +31,8 @@ const DeleteUserModal = inject('userStore')(observer((props) => {
                         props.userStore.setAdminPanelMessageVisibility()
                     }, 5000);  
             }}>Yes
-            </Button>
-            <Button 
+            </button>
+            <button 
                 onClick={(e) => {
                     props.userStore.adminDeleteUserModalVisibility = false; // Hide this modal
                     props.userStore.setAdminPanelMessageVisibility(); // Delete the user
@@ -41,7 +41,7 @@ const DeleteUserModal = inject('userStore')(observer((props) => {
                         props.userStore.setAdminPanelMessageVisibility()
                     }, 5000);  
             }}>No
-            </Button>
+            </button>
         </Modal.Description>
         </Modal.Content>
     </Modal>

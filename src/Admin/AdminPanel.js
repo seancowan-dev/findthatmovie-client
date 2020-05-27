@@ -17,4 +17,10 @@ const AdminPanel = inject('userStore', 'helpers')(observer((props) => {
         </>);
 }));
 
+// // Pull stylesheet for semantic UI - this is the method directly from their documentation
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
+
 export default AdminPanel;

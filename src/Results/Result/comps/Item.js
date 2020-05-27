@@ -1,20 +1,23 @@
 import React from 'react';
-import { Container, Item } from 'semantic-ui-react';
+// import { Item } from 'semantic-ui-react';
+import './Item.css';
 
 const HeadItem = (props) => {
     return (
-    <Container text className="single-movie-header-item">
-        <Item.Group>
-            <Item>
-                <Item.Image size='small' src={props.movieHeadItem.src} />
-                <Item.Content>
-                    <Item.Description>
+    <div className="single-movie-header-item text container">
+        <div className="movie-header-items">
+            <div className="movie-header-item">
+                <div className="small image">
+                    <img src={props.movieHeadItem.src} alt={"Movie Poster for: " + props.movieHeadItem.title} />
+                </div>
+                <div className="movie-header-content">
+                    <div className="movie-header-description">
                         {props.movieHeadItem.overview}
-                    </Item.Description>
-                </Item.Content>
-            </Item>
-        </Item.Group>
-    </Container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     );
 };
 

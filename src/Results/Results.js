@@ -10,7 +10,7 @@ function checkPoster(object) {
     if (object != null) {
         url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + object;
     } else {
-        url = "images/not-found.jpg";
+        url = "https://seancowan-dev.github.io/findthatmovie/images/not-found.jpg";
     }
 
     return url;

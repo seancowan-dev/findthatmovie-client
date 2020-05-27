@@ -25,7 +25,7 @@ const Login = inject('dataStore', 'userStore', 'helpers', 'validators')(observer
                 </FormControl>
                 <FormControl>
                     <TextField 
-                        label="Enter username"
+                        label="Enter password"
                         className="login-password-input"
                         type="password"
                         value={props.userStore.loginInfo.password}

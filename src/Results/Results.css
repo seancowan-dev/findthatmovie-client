@@ -49,7 +49,7 @@
 }
 
 .result-poster {
-    max-width: 150px;
+    max-width: 150px!important;
 }
 
 .search-results-container {

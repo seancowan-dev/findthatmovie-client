@@ -1,11 +1,10 @@
 import React from 'react';
 import Comments from '../../comps/comments/comments';
 import Cast from '../../comps/cast/cast';
-import Item from './comps/Item';
+import HeadItem from './comps/Item';
 import ListMenu from '../../comps/add-list-menu/Menu';
 import { Message } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
-import { Container } from 'semantic-ui-react';
 import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
 import uuid from 'uuid';
@@ -16,7 +15,7 @@ function checkPoster(object) {
     if (object != null) {
         url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + object;
     } else {
-        url = "images/not-found.jpg";
+        url = "https://seancowan-dev.github.io/findthatmovie/images/not-found.jpg";
     }
 
     return url;
@@ -68,10 +67,11 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
     if (props.searchStore.getLoading === false) {
         let movieHeadItem = {
             src: checkPoster(props.searchStore.getPoster),
-            overview: props.searchStore.getOverview
+            overview: props.searchStore.getOverview,
+            title: props.searchStore.getOriginalTitle
         }
         return (
-            <Container className="single-movie-results" key={uuid.v4()}>
+            <div className="single-movie-results container" key={uuid.v4()}>
                 <div className="single-movie-heading" key={uuid.v4()}>
                     <h2>{props.searchStore.getOriginalTitle}</h2>
                     <h3>{details.tagline}</h3>
@@ -85,16 +85,16 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
                     <p className="budget-para">{details.runtime} mins</p>
                     {props.userStore.getAuthenticated === true ? addMenu : ""}
                 </div>
-                <Container key={uuid.v4()} className="single-movie-info">
-                    <Item movieHeadItem={movieHeadItem} />
-                    <Container text>
+                <div key={uuid.v4()} className="single-movie-info container text">
+                    <HeadItem movieHeadItem={movieHeadItem} />
+                    <div className="container text">
                         <Cast info={props.searchStore.getDetailedInfo} />
-                    </Container>
-                    <Container text>
+                    </div>
+                    <div className="container text">
                         <Comments />
-                    </Container>
-                </Container>
-            </Container>
+                    </div>
+                </div>
+            </div>
         );
     }
     return (

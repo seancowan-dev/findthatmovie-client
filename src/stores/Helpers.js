@@ -129,8 +129,8 @@ class Helpers {
 
     }
     checkVisible(targetElement) {
-        let len = targetElement.offsetParent.children[1].children.length;
-        let currentClass = targetElement.offsetParent.children[1].children[len - 1].className;
+        let len = targetElement.parentElement.parentElement.nextSibling.children.length;
+        let currentClass = targetElement.parentElement.parentElement.nextSibling.children[len - 1].className;
         let otherClasses;
         let visibleClass;
         let strPos;
@@ -162,7 +162,7 @@ class Helpers {
         let newVisibility;
         visibleClass === "active" ? newVisibility = "inactive" : newVisibility = "active";
 
-        targetElement.offsetParent.children[1].children[len - 1].className = otherClasses + " " + newVisibility;
+        targetElement.parentElement.parentElement.nextSibling.children[len - 1].className = otherClasses + " " + newVisibility;
         return;
       }
     // checkVisibleEdit(targetElement) {

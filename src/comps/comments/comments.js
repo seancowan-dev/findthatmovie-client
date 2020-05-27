@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { Container, Button, Comment, Form, Header, Message } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import CommentsService from '../../services/comments-service';
 import uuid from 'uuid';
 import './comments.css';
@@ -51,7 +51,17 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
           "comment": target.form.firstChild.firstChild.value,
           "updated_at": new Date(date).toISOString()
       }
-      return comment; 
+
+      if (comment.comment !== "") {
+        return comment;
+      }
+      if (comment.comment === "") {
+        comment = false;
+        props.userStore.setCommentVisibility();  // Display message
+        props.userStore.setCommentMessage("Cannot post a blank comment, please enter some text in your comment."); // Display message
+        return comment;
+      }
+
     }
 
     const deleteReplyComment =  (target, type) => { // Validation for deleting replies or comments
@@ -114,176 +124,188 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
       if (commentObj.replies[0] !== null) { // Only map replies if the comments object has replies
         replyObj = commentObj.replies.map(reply => { // Map the replies
           return (  // For each reply build and return appropriate ui elements
-            <Comment 
+            <div className="comment"
               key={uuid.v4()} 
               id={reply.rep_id}
             >
-              <Comment.Content 
+              <div className="content"
                 key={uuid.v4()}
               >
-                <Comment.Author  
+                <a className="author" 
                   key={uuid.v4()} 
-                  as='a'>
+                >
                     {reply.rep_user}
-                </Comment.Author>
-                <Comment.Metadata 
+                </a>
+                <div className="metadata" 
                   key={uuid.v4()}
                 >
-                  <div>
+                  <div className="posting-date">
                     {moment().format(reply.rep_uat)}
                   </div>
-                </Comment.Metadata>
-                  <Comment.Text  
+                </div>
+                  <div className="comment-text"  
                     key={uuid.v4()}>{reply.rep_comment}
-                  </Comment.Text>
-                <Comment.Actions 
+                  </div>
+                <div className="comment-actions" 
                   key={uuid.v4()}
                 >
-                  <Comment.Action 
+                  <button 
                     key={uuid.v4()} 
-                    as='button' 
-                    className="reply-edit" 
+                    className="reply-edit button" 
                     onClick={(e) => {
                       editReplyComment(e.target.parentElement.parentElement.offsetParent, e.target, e.target.parentElement.parentElement.parentElement.parentElement, false)
                       }}>Edit
-                  </Comment.Action>
-                  <Comment.Action 
+                  </button>
+                  <button 
                     key={uuid.v4()} 
-                    as='button' 
-                    className="comment-delete" 
+                    className="comment-delete button" 
                     onClick={(e) => {
                       deleteReplyComment(e.target.parentElement.parentElement.offsetParent, "reply");            
                     }}>Delete
-                  </Comment.Action>
-                </Comment.Actions>
-                <Form key={uuid.v4()} reply className={"update-comment inactive"}>
-                    <Form.TextArea key={uuid.v4()}/>
-                    <Button
+                  </button>
+                </div>
+                <form key={uuid.v4()} className={"update-comment inactive"}>
+                    <div className="field" key={uuid.v4()}>
+                      <textarea rows="3">
+
+                      </textarea>
+                    </div>  
+                    <button
+                      className="comment-update button"
                       key={uuid.v4()}
-                      content='Update Comment'
-                      labelPosition='left'
-                      icon='edit'
-                      primary
                       onClick={(e) => {
-                        let comment = serializeComment(e.target, true, true)
-                        updateComments(comment);                        
-                     }}/>
-                  </Form>
-              </Comment.Content>
-            </Comment>
+                        e.preventDefault();
+                        let comment = serializeComment(e.target, true, true);
+                        if (comment !== false) {
+                          updateComments(comment);          
+                        }              
+                     }}>Update Comment</button>
+                  </form>
+              </div>
+            </div>
           );
         });
       }
       return (  // For each comment return the appropriate ui elements with their replies
-        <Comment 
-          key={uuid.v4()} 
-          id={commentObj.id}
+      <div className='comment'
+      key={uuid.v4()} 
+      id={commentObj.id}
+      >
+        <div className='content'
+        key={uuid.v4()}
         >
-        <Comment.Content 
-          key={uuid.v4()}
-        >
-          <Comment.Author 
-            key={uuid.v4()} 
-            as='a'>
-            {commentObj.user_name}
-          </Comment.Author>
-          <Comment.Metadata 
-            key={uuid.v4()} 
-          >
-            <div>
-              {moment().format(commentObj.updated_at)}
-            </div>
-          </Comment.Metadata>
-            <Comment.Text 
-              key={uuid.v4()}>{commentObj.comment}
-            </Comment.Text>
-          <Comment.Actions 
+          <a className='author'
             key={uuid.v4()}
           >
-            <Comment.Action 
+            {commentObj.user_name}
+          </a>
+          <div className='metadata' 
+            key={uuid.v4()} 
+          >
+            <div className='posting-date'>
+              {moment().format(commentObj.updated_at)}
+            </div>
+          </div>
+              <div className='comment-text' 
+                  key={uuid.v4()}>{commentObj.comment}
+              </div>
+          <div className='comment-actions' 
+            key={uuid.v4()}
+          >
+            <button 
               key={uuid.v4()} 
-              as='button' 
+              className="button"
               onClick={(e) => {
+                console.dir(e.target.parentElement.parentElement.nextSibling.children)
                 props.helpers.checkVisible(e.target)
                 }}>Reply
-            </Comment.Action>
-            <Comment.Action 
+            </button>
+            <button 
               key={uuid.v4()} 
-              as='button' 
-              className="comment-edit" 
+              className="comment-edit button" 
               onClick={(e) => {
                 editReplyComment(e.target.parentElement.parentElement.parentElement, e.target, e.target.offsetParent.lastChild.lastChild, true)
                 }}>Edit
-            </Comment.Action>
-            <Comment.Action 
+            </button>
+            <button 
               key={uuid.v4()} 
-              as='button' 
-              className="comment-delete" 
+              className="comment-delete button" 
               onClick={(e) => {
                 deleteReplyComment(e.target.parentElement.parentElement.parentElement, "comment")
                 }}>Delete
-            </Comment.Action>               
-          </Comment.Actions>
-          <Form key={uuid.v4()} reply className={"update-comment inactive"}>
-                    <Form.TextArea key={uuid.v4()} />
-                    <Button
+            </button>               
+          </div>
+          <form key={uuid.v4()} className={"update-comment inactive"}>
+                  <div 
+                      className="field"
                       key={uuid.v4()}
-                      content='Update Comment'
-                      labelPosition='left'
-                      icon='edit'
-                      primary
+                  >
+                      <textarea rows="3"></textarea>
+                  </div>
+                    <button
+                      key={uuid.v4()}
                       onClick={(e) => {
+                        e.preventDefault();
                         let comment =  serializeComment(e.target, false);
-                        updateComments(comment);
-                     }}/>
-                  </Form>
-        </Comment.Content>
-        <Comment.Group key={uuid.v4()} threaded>
+                        if (comment !== false) {
+                          updateComments(comment);
+                        }
+                    }}>Update Comment</button>
+          </form>
+          </div>
+          <div className='threaded comments' key={uuid.v4()}>
           {commentObj.replies[0] !== null ? replyObj : ""}
-          <Form key={uuid.v4()} reply className={"inactive"}>
-                    <Form.TextArea key={uuid.v4()} />
-                    <Button
+          <form key={uuid.v4()} className={"inactive"}>
+                  <div 
+                      className="field"
                       key={uuid.v4()}
-                      content='Add Reply'
-                      labelPosition='left'
-                      icon='edit'
-                      primary
+                  >
+                      <textarea rows="3"></textarea>
+                  </div>
+                    <button
+                      key={uuid.v4()}
+                      className="button"
                       onClick={(e) => {
+                        e.preventDefault();
                         let comment = serializeComment(e.target, true);
-                        console.log(comment);
-                        addComments(comment);
-                     }}/>
-                  </Form>
-        </Comment.Group>
-        
-  
-      </Comment>
+                        if (comment !== false) {
+                          addComments(comment);
+                        }
+                    }}>Add Reply</button>
+          </form>
+        </div>
+      </div>
       );
     })
   }
     return (  // Build the boilerplate for the the ui elements and input the comments
-        <div key={uuid.v4()} className="user-comments-container">
-          <Comment.Group key={uuid.v4()}>
-            <Header as='h3' dividing  key={uuid.v4()} >
-              Comments
-            </Header>
-            <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.commentMessage.visible)} content={props.userStore.commentMessage.message} />
-            {comments}
-          <Form reply key={uuid.v4()}>
-            <Form.TextArea key={uuid.v4()} />
-            <Button 
-              key={uuid.v4()}
-              content='Add Reply' 
-              labelPosition='left' 
-              icon='edit' 
-              primary 
-              onClick={(e) => {
-                let comment = serializeComment(e.target, false);
-                addComments(comment);
-            }}/>
-          </Form>
-        </Comment.Group>
-      </div>
+<div key={uuid.v4()} className="user-comments-container">
+  <div className="comment-group" key={uuid.v4()}>
+    <h3 key={uuid.v4()} >
+      Comments
+    </h3>
+    <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.commentMessage.visible)} content={props.userStore.commentMessage.message} />
+    {comments}
+  <form key={uuid.v4()}>
+    <div 
+      className="field"
+      key={uuid.v4()}
+    >
+      <textarea rows="3"></textarea>
+    </div>
+    <button 
+      key={uuid.v4()}
+      className="button"
+      onClick={(e) => {
+        e.preventDefault();
+        let comment = serializeComment(e.target, false);
+        if (comment !== false) {
+          addComments(comment);
+        }
+    }}>Add Reply</button>
+  </form>
+  </div>
+</div>      
     );
 }));
 

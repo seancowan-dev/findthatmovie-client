@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, FormControl, InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
-// FormControlLabel, FormHelperText, Checkbox, 
 import { observer, inject } from 'mobx-react';
 import uuid from 'uuid';
 import { navigate } from 'hookrouter';
@@ -39,7 +38,7 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
             <TextField
                 id="user-query-input"
                 className="user-query-input"
-                label="Enter keyword(s) or title"
+                label="Search"
                 value={props.searchStore.searchParams.userQuery}
                 onChange={(e) => {
                     props.searchStore.searchParams.userQuery = e.target.value;
@@ -76,21 +75,6 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
                 {genres}
             </Select>
         </FormControl>
-        {/* |Temporarily disabled because this requires a combined API call which will be written on Node later |
-        <FormControl className="select-country-control">
-            <InputLabel id="select-country-label">Country</InputLabel>
-            <Select
-                labelId="select-country-label"
-                id="select-country"
-                className="select-country"
-                value={props.searchStore.searchParams.selectedCountry}
-                onChange={(e) => {
-                    props.searchStore.searchParams.selectedCountry = e.target.value;
-                }}
-                >
-                {countries}
-            </Select>
-        </FormControl> */}
         <FormControl className="select-rating-control-min">
             <InputLabel id="select-rating-label-min">Rating</InputLabel>
             <Select
