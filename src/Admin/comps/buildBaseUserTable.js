@@ -1,30 +1,30 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react'; 
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import buildUserRows from './buildUserRows';
 import DeleteUserModal from './deleteUserModal';
 
-const useStyles = makeStyles({
-    table: {
-        marginLeft: 10,
-        marginRight: 10
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
     },
-  });
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
 
 
 const BuildBaseTable = inject('userStore')(observer((props) => {
-    const classes = useStyles();
 
     return (
-        <TableContainer className={classes.table} component={Paper}>
-        <Table className="folder-note-list-table">
+        <TableContainer component={Paper}>
+        <Table className="user-management-table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Date Added</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <StyledTableCell>Name</StyledTableCell>
+                        <StyledTableCell>Actions</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { Container, ExpansionPanel, ExpansionPanelSummary, FormHelperText, FormControl, ExpansionPanelDetails, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField }  from '@material-ui/core';
+import { Container, ExpansionPanel, ExpansionPanelSummary, FormHelperText, FormControl, ExpansionPanelDetails, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField }  from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { Message } from 'semantic-ui-react';
@@ -108,11 +108,9 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                         {listData.list_name}
                     </Typography>
                     <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-                        <Button 
+                        <button 
                             id={listData.id}
                             className="delete-list-button"
-                            color="secondary"
-                            variant="contained"
                             type="submit"
                             onClick={(e) => {
                                 props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
@@ -120,7 +118,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                                 props.userStore.setListMessageVisibility(); // Show the message box
                                 props.userStore.setListMessage("Successfully deleted list"); // Show a message indicating that the list was deleted
                             }}
-                        >Delete List</Button>
+                        >Delete List</button>
                     </Grid>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails 
@@ -184,10 +182,8 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                 </FormControl>                       
             </form>
             <Grid className={props.userStore.addUserListToggleButtonVisibility}>
-                <Button 
+                <button 
                     className="toggle-add-list-form-button"
-                    color="secondary"
-                    variant="contained"
                     type="submit"
                     onClick={(e) => {
                         props.userStore.setExpandedHistory(logExpanded());
@@ -198,13 +194,11 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                         console.log("I activate the form");
                     }}
                 >Add List
-                </Button>
+                </button>
             </Grid>
             <Grid className={props.userStore.addUserListButtonVisibility}>
-                <Button 
+                <button 
                     className="add-list-form-button"
-                    color="secondary"
-                    variant="contained"
                     type="submit"
                     onClick={(e) => {
                         props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
@@ -217,7 +211,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                         console.log("I add lists");
                     }}
                 >Add List
-                </Button>
+                </button>
             </Grid>
         </Grid> 
         {pane}

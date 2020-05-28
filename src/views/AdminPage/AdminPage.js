@@ -2,7 +2,6 @@ import React from 'react';
 import Nav from '../../Nav/Nav';
 import { observer, inject } from 'mobx-react';
 import UsersService from '../../services/users-service';
-import { Container } from 'semantic-ui-react';
 import AdminPanel from '../../Admin/AdminPanel';
 
 const AdminPage = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
@@ -19,11 +18,11 @@ const AdminPage = inject('dataStore', 'userStore', 'helpers')(observer((props) =
     }
     return <>
             <Nav />
-            <Container>
+            <div className="container admin-panel">
             <h1>Administrator Control Panel</h1>
             <h4>Add/Manage Users</h4>
             <AdminPanel />
-            </Container>
+            </div>
         </>
 }));
 

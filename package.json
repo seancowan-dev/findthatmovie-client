@@ -46,6 +46,7 @@
     "jest-watch-typeahead": "0.4.2",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
+    "little-loader": "^0.2.0",
     "load-json-file": "^6.2.0",
     "lodash.clone": "^4.5.0",
     "lodash.debounce": "^4.0.8",
@@ -96,7 +97,7 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-            "no-useless-escape": "off"
+      "no-useless-escape": "off"
     }
   },
   "browserslist": {

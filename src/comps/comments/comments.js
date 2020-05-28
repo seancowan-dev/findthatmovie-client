@@ -131,11 +131,11 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
               <div className="content"
                 key={uuid.v4()}
               >
-                <a className="author" 
+                <span className="author" 
                   key={uuid.v4()} 
                 >
                     {reply.rep_user}
-                </a>
+                </span>
                 <div className="metadata" 
                   key={uuid.v4()}
                 >
@@ -194,11 +194,11 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
         <div className='content'
         key={uuid.v4()}
         >
-          <a className='author'
+          <span className='author'
             key={uuid.v4()}
           >
             {commentObj.user_name}
-          </a>
+          </span>
           <div className='metadata' 
             key={uuid.v4()} 
           >

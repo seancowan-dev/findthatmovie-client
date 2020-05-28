@@ -1,7 +1,8 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react';
-import { Button, Modal } from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 import UsersService from '../../services/users-service';
+import '../semantic.css';
 
 const DeleteUserModal = inject('userStore')(observer((props) => {
     const onClose = () => {

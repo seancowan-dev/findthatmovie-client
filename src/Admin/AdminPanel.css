@@ -4,3 +4,7 @@
   .inactive {
     display: none;
   }
+
+  .admin-panel {
+    margin-top: 30px;
+  }

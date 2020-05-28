@@ -6,7 +6,7 @@ import './Account.css';
 import UserStore from '../stores/UserStore';
 import UserService from '../services/users-service';
 import bcrypt from 'bcryptjs';
-import { Button, FormControl, FormHelperText, TextField } from '@material-ui/core';
+import { FormControl, FormHelperText, TextField } from '@material-ui/core';
 
 const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => {
 
@@ -56,9 +56,7 @@ const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => 
                             <FormHelperText id="user-newConfirm-password-input-label">Confirm New Password</FormHelperText>                          
                         </FormControl>                                                
                     </form>
-                    <Button
-                    variant="contained"
-                    color="secondary"
+                    <button
                     onClick={(e) => {
                         if (props.userStore.getChangePasswordNew === props.userStore.getChangePasswordNewConfirm) {
                             bcrypt.hash(props.userStore.getChangePasswordNewConfirm, 8, function (err, hash) {
@@ -74,7 +72,7 @@ const Account = inject('dataStore', 'userStore', 'helpers')(observer((props) => 
                     }}
                     >
                         Change Password
-                    </Button>
+                    </button>
                 </section>
               </div>
             );
