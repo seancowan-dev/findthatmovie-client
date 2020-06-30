@@ -49,9 +49,9 @@ const AddMenu = inject('userStore', 'searchStore')(observer((props) => {
   
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" variant="contained" color="primary" onClick={handleClick}>
+      <button aria-controls="simple-menu" aria-haspopup="true" className="buttons add-menu-button" color="primary" onClick={handleClick}>
         Add To List
-      </Button>
+      </button>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

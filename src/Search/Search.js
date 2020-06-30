@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, FormControl, InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, TextField, Select, Grid, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
 import uuid from 'uuid';
 import { navigate } from 'hookrouter';
@@ -28,6 +29,7 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
             }
         }
     return <form className="search-form">
+    <img className="logo-image" src="/images/logo.png" alt="Findthatmovie Logo" />
     <Grid 
         container
         direction="column"
@@ -90,26 +92,24 @@ const Search = inject("searchStore", "dataStore", "helpers")(observer((props) =>
             </Select>
         </FormControl>
         </Grid>
-        <Button
-        variant="contained"
-        onClick={(e) => {
-            navigate('/results'); // Move user forward to next results page | Breadcrumb this later|
+        <button 
+            className="buttons"
+            onClick={(e) => {
+                navigate('/results'); // Move user forward to next results page | Breadcrumb this later|
 
-            props.searchStore.getMovieList(false).then(res => {
-                props.searchStore.searchResults = []; // Make sure old results are removed
-                if (res.results !== undefined || res.results.length !== 0) {
-                    props.searchStore.total_pages = res.total_pages;
-                    props.searchStore.searchResults.push(res);
-                    props.searchStore.searchState = "display";
-                }
-                if (res.results === undefined || res.results.length === 0) {
-                    props.searchStore.searchState = "none";
-                }
-            });
-        }}
-        >
-            Search
-        </Button>
+                props.searchStore.getMovieList(false).then(res => {
+                    props.searchStore.searchResults = []; // Make sure old results are removed
+                    if (res.results !== undefined || res.results.length !== 0) {
+                        props.searchStore.total_pages = res.total_pages;
+                        props.searchStore.searchResults.push(res);
+                        props.searchStore.searchState = "display";
+                    }
+                    if (res.results === undefined || res.results.length === 0) {
+                        props.searchStore.searchState = "none";
+                    }
+                });
+            }}
+        >Search</button>
     </Grid>
 
 </form>

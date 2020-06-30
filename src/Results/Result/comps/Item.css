@@ -1,127 +1,36 @@
 .single-movie-header-item {
-    
-}
-
-.movie-header-items {
-    margin: 1.5em 0;
-}
-
-.movie-header-items:last-child {
-    margin-bottom: 0!important;
-}
-
-.movie-header-items:first-child {
-    margin-top: 0!important;
-}
-
-.movie-header-item {
-    display: flex;
-    margin: 1em 0;
-    width: 100%;
-    background: 0 0;
-    min-height: 0;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    font-size: 1em;
-}
-
-.movie-header-item:after {
-    display: block;
-    content: ' ';
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
-}
-
-/* .movie-header-item:last-child {
-    margin-bottom: 0;
-}
-
-.movie-header-item:first-child {
-    margin-top: 0;
-} */
-
-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: .125rem;
-    border: none;
-}
-
-.image {
     position: relative;
-    flex: 0 0 auto;
-    float: none;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
+    margin-bottom: 21px;
+}
+.movie-header-items {
+    width: 100%;
+}
+.image-container {
+    background-color: #2D314F;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.image-container > img {
+    display: block;
+    max-height: 300px;
     max-width: 100%;
-    background-color: transparent;
+    margin-left: auto;
+    margin-right: auto;
 }
-
-.small {
-    width: 150px;
-    height: auto;
-    font-size: .9285rem;
-}
-
 .movie-header-content {
-    flex: 1 1 auto;
-    background: 0 0;
-    margin: 0;
-    padding: 0;
-    border: none;
-    font-size: 1em;
+    background-color: #4F4A39;
+    padding: 5%;
+    text-align: justify;
 }
 
-.movie-header-content:after {
-    display: block;
-    content: ' ';
-    height: 0;
-    clear: both;
-    overflow: hidden;
-    visibility: hidden;
-}
-
-.image+.movie-header-content {
-    min-width: 0;
-    width: auto;
-    display: block;
-    margin-left: 0;
-    padding-left: 1.5em;
-}
-
-.movie-header-description {
-
-}
-
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 768px) {
     .movie-header-item {
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        flex-direction: column;
-        margin: 2em 0;
+        display: grid;
+        grid-template-columns: 300px auto;
     }
-
-    img {
-        max-width: 100%!important;
-        width: auto!important;
-        max-height: 250px!important;
-    }
-    
-    .movie-header-item > .image {
-        max-width: 100%!important;
-        width: auto!important;
-        max-height: 250px!important;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .image+.movie-header-content {
-        padding: 1.5em 0 0;
+    .movie-header-content {
+        padding: 10%;
+        font-size: 1.25em;
+        font-weight:  400;
     }
 }

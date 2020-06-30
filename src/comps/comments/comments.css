@@ -1,17 +1,90 @@
-.user-comments-container {
-    background-color: rgb(139, 139, 139);
-    padding: 5%;
-  }
+  .user-comments-container {
+      background-color: #90849E;
+    }
   
+  
+  .metadata {
+    display: flex;
+    flex-direction: column;
+    max-width: 740px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .metadata::before {
+    content: " ";
+    position: absolute;
+    left: -10px;
+    width: 8px;
+    height: calc(100% - 30px);
+    background-color: #48424F;
+    opacity: 0.75;
+    z-index: 3;
+  }
+
+  .author {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .comment-group {
+    max-width: 740px;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .comment-group > h3 {
+    position: relative;
+    left: -10px;
+    max-width: 740px;
+    font-size: 24px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .comment-body {
     border: 1px solid black;
     height: 100px;
   }
-  
+
+  .comment-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .comment-text {
+    max-width: 740px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .comment-button {
+    width: 70px!important;
+    height: 30px!important;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 12px!important;
+    font-weight: 600!important;
+    margin-left: 2px!important;
+    margin-right: 2px!important;
+  }
+
   .comment-submit {
     float: right;
   }
-  
+
+  .update-comment > div.field {
+    max-width: 70%;
+    margin-left: auto;
+  }
+
+  .update-button {
+    position: absolute;
+    right: 0px;
+    z-index: 10;
+  }
+
   .user-comment-form-body {
     width: 100%;
     height: 100px;
@@ -36,4 +109,26 @@
   }
   .inactive {
     display: none;
+  }
+
+  .content {
+    position: relative;
+  }
+
+  .field {
+    display: flex;
+    justify-content: center;
+    margin-right: 2px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+  }
+
+  .field > textarea {
+    resize: none;
+    width: 740px;
+    height: 100px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.75);
   }

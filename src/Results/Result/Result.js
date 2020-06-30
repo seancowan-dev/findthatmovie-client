@@ -81,16 +81,16 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
                 </div>
                 <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.searchStore.addListMessage.visible)} content={props.searchStore.addListMessage.message} />
                 <div className="single-movie-budglength" key={uuid.v4()}>
-                    <p className="budget-para">{budget(details.budget)}</p>
-                    <p className="budget-para">{details.runtime} mins</p>
+                    <p>{budget(details.budget)}</p>
+                    <p>{details.runtime} mins</p>
                     {props.userStore.getAuthenticated === true ? addMenu : ""}
                 </div>
-                <div key={uuid.v4()} className="single-movie-info container text">
+                <div key={uuid.v4()} className="single-movie-info">
                     <HeadItem movieHeadItem={movieHeadItem} />
-                    <div className="container text">
+                    <div>
                         <Cast info={props.searchStore.getDetailedInfo} />
                     </div>
-                    <div className="container text">
+                    <div>
                         <Comments />
                     </div>
                 </div>

@@ -1,12 +1,30 @@
 .movie-cast-container {
     width: 100%;
-    background-color: rgb(161, 161, 161);
     display: grid;
     grid-template-columns: 60px auto auto;
-    column-gap: 10px;
+    font-size: 16px;
+  }
+
+  .movie-cast-container > p {
     padding: 5px;
+    line-height: 54px;
+    vertical-align: middle;
   }
   
   .cast-pictures {
     max-width: 60px;
+  }
+
+  .first-cast-color {
+    background-color: #4E354F;
+  }
+  
+  .second-cast-color {
+    background-color: #2D314F;
+  }
+
+  @media screen and (min-width: 375px) {
+    .movie-cast-container {
+      font-size: 18px;
+    }
   }

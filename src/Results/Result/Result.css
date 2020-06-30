@@ -11,24 +11,25 @@
     overflow: hidden;
     padding-bottom: 56.25%;
     position: relative;
-    margin-top: 20px;
-  
   }
 
   .single-movie-results {
-      background-color: rgb(107, 107, 107);
+    background-color: #2D314F;
   }
 
   .single-movie-heading {
       display: flex;
       flex-direction: column;
       align-items: center;
+      background-color: #2D314F;
   }
 
   .single-movie-budglength {
+      position: relative;
       display: flex;
       justify-content: space-evenly;
       align-items: center;
+      background-color: #2D314F;
   }
 
   .single-movie-description {

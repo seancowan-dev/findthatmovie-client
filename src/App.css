@@ -1,16 +1,5 @@
-.search-form-container {
-  width: 100%;
-  padding-top: 10px;
-  position: relative;
-  top: 0px;
-  --webkit-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
-  --moz-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
-  background-color: rgb(180, 180, 180);
-}
-
 .parallax {
-  height: 60vh;
+  height: 22vh;
 }
 
 .parallax::before {
@@ -38,11 +27,36 @@
   line-height: 1.5;
 }
 
+.buttons {
+  background-color: #22252c;
+  color: #C0B3A0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  line-height: 18px;
+  margin: 0;
+  border: 1px solid #E14658;
+  border-radius: 10px;
+  width: 125px;
+  height: 40px;
+}
+
+.buttons:active {
+  color: #22252c;
+}
+.buttons:hover {
+  color: #e14658;
+}
+
+@media screen and (min-width: 360px) {
+  .parallax {
+    height: 42vh;
+  }
+}
 @media screen and (max-width: 767px) {
   .container {
     width: auto!important;
-    margin-left: 1em!important;
-    margin-right: 1em!important;
+    margin-left: 0!important;
+    margin-right: 0!important;
   }
 }
 

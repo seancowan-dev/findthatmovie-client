@@ -95,6 +95,9 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
     }
     const editReplyComment = (target_for_id, base_target, target_for_class, comment = false) => { // Validation for editing replies or comments
       // Comment is false for replies and true for comments
+      console.log(target_for_id);
+      console.log(base_target);
+      console.log(target_for_class);
       let id = target_for_id.id
       props.helpers.checkUserPerms(id).then(res => {
         if (res.userStatus === "allowed") { // If they are allowed
@@ -107,10 +110,10 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
           if (comment === false) {
             let len = target_for_class.children.length
             // The last elem will always be the reply form, hide the reply form
-            target_for_class.children[len - 1].className += " inactive";
+            target_for_class.children[len - 1].className += " active";
           }
           if (comment === true) {
-            target_for_class.className += " inactive";
+            target_for_class.className += " active";
           }
           // Show/hide the edit form
           props.helpers.checkVisibleEditReply(base_target);
@@ -131,16 +134,16 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
               <div className="content"
                 key={uuid.v4()}
               >
-                <span className="author" 
-                  key={uuid.v4()} 
-                >
-                    {reply.rep_user}
-                </span>
                 <div className="metadata" 
                   key={uuid.v4()}
                 >
+                  <div className="author" 
+                    key={uuid.v4()} 
+                  >
+                      {reply.rep_user}
+                  </div>
                   <div className="posting-date">
-                    {moment().format(reply.rep_uat)}
+                    {moment(reply.rep_uat).format("MMM Do YYYY")}
                   </div>
                 </div>
                   <div className="comment-text"  
@@ -151,14 +154,14 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                 >
                   <button 
                     key={uuid.v4()} 
-                    className="reply-edit button" 
+                    className="reply-edit buttons comment-button 34" 
                     onClick={(e) => {
-                      editReplyComment(e.target.parentElement.parentElement.offsetParent, e.target, e.target.parentElement.parentElement.parentElement.parentElement, false)
+                      editReplyComment(e.target.parentElement.parentElement.parentElement, e.target, e.target.parentElement.parentElement.parentElement.parentElement, false)
                       }}>Edit
                   </button>
                   <button 
                     key={uuid.v4()} 
-                    className="comment-delete button" 
+                    className="comment-delete buttons comment-button" 
                     onClick={(e) => {
                       deleteReplyComment(e.target.parentElement.parentElement.offsetParent, "reply");            
                     }}>Delete
@@ -166,12 +169,12 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                 </div>
                 <form key={uuid.v4()} className={"update-comment inactive"}>
                     <div className="field" key={uuid.v4()}>
-                      <textarea rows="3">
+                      <textarea>
 
                       </textarea>
                     </div>  
                     <button
-                      className="comment-update button"
+                      className="comment-update buttons comment-button update-button"
                       key={uuid.v4()}
                       onClick={(e) => {
                         e.preventDefault();
@@ -179,8 +182,8 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                         if (comment !== false) {
                           updateComments(comment);          
                         }              
-                     }}>Update Comment</button>
-                  </form>
+                     }}>Update</button>
+                </form>
               </div>
             </div>
           );
@@ -194,16 +197,16 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
         <div className='content'
         key={uuid.v4()}
         >
-          <span className='author'
-            key={uuid.v4()}
-          >
-            {commentObj.user_name}
-          </span>
           <div className='metadata' 
             key={uuid.v4()} 
           >
+            <div className='author'
+              key={uuid.v4()}
+            >
+              {commentObj.user_name}
+            </div>
             <div className='posting-date'>
-              {moment().format(commentObj.updated_at)}
+              {moment(commentObj.updated_at).format("MMM Do YYYY")}
             </div>
           </div>
               <div className='comment-text' 
@@ -214,22 +217,21 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
           >
             <button 
               key={uuid.v4()} 
-              className="button"
+              className="buttons comment-button"
               onClick={(e) => {
-                console.dir(e.target.parentElement.parentElement.nextSibling.children)
                 props.helpers.checkVisible(e.target)
                 }}>Reply
             </button>
             <button 
               key={uuid.v4()} 
-              className="comment-edit button" 
+              className="comment-edit buttons comment-button" 
               onClick={(e) => {
                 editReplyComment(e.target.parentElement.parentElement.parentElement, e.target, e.target.offsetParent.lastChild.lastChild, true)
                 }}>Edit
             </button>
             <button 
               key={uuid.v4()} 
-              className="comment-delete button" 
+              className="comment-delete buttons comment-button" 
               onClick={(e) => {
                 deleteReplyComment(e.target.parentElement.parentElement.parentElement, "comment")
                 }}>Delete
@@ -240,9 +242,10 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                       className="field"
                       key={uuid.v4()}
                   >
-                      <textarea rows="3"></textarea>
+                      <textarea></textarea>
                   </div>
                     <button
+                      className="buttons comment-button update-button"
                       key={uuid.v4()}
                       onClick={(e) => {
                         e.preventDefault();
@@ -250,7 +253,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                         if (comment !== false) {
                           updateComments(comment);
                         }
-                    }}>Update Comment</button>
+                    }}>Update</button>
           </form>
           </div>
           <div className='threaded comments' key={uuid.v4()}>
@@ -260,11 +263,12 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                       className="field"
                       key={uuid.v4()}
                   >
-                      <textarea rows="3"></textarea>
+                      <textarea></textarea>
                   </div>
+                  <div className="comment-actions">
                     <button
                       key={uuid.v4()}
-                      className="button"
+                      className="buttons comment-button"
                       onClick={(e) => {
                         e.preventDefault();
                         let comment = serializeComment(e.target, true);
@@ -272,6 +276,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                           addComments(comment);
                         }
                     }}>Add Reply</button>
+                  </div>
           </form>
         </div>
       </div>
@@ -291,18 +296,20 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
       className="field"
       key={uuid.v4()}
     >
-      <textarea rows="3"></textarea>
+      <textarea></textarea>
     </div>
-    <button 
-      key={uuid.v4()}
-      className="button"
-      onClick={(e) => {
-        e.preventDefault();
-        let comment = serializeComment(e.target, false);
-        if (comment !== false) {
-          addComments(comment);
-        }
-    }}>Add Reply</button>
+    <div className="comment-actions">
+      <button 
+        key={uuid.v4()}
+        className="buttons comment-button"
+        onClick={(e) => {
+          e.preventDefault();
+          let comment = serializeComment(e.target, false);
+          if (comment !== false) {
+            addComments(comment);
+          }
+      }}>Add Reply</button>
+    </div>
   </form>
   </div>
 </div>      
