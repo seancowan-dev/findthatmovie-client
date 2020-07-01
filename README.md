@@ -5,6 +5,7 @@ https://findthatmovie-client.now.sh/
 ### API
 
 The source code for the API can be found here: https://github.com/seancowan-dev/findthatmovie-api
+
 The API is running here: https://secure-inlet-58346.herokuapp.com/
 
 The API runs endpoints for user accounts, user lists, and user comments
