@@ -11,7 +11,8 @@ The API is running here: https://secure-inlet-58346.herokuapp.com/
 The API runs endpoints for user accounts, user lists, and user comments
 
 ### About
-https://pasteboard.co/Jfz65U0.png
+Screenshot: https://pasteboard.co/Jfz65U0.png
+
 This app is intended to allow users to search for movies that they would like to watch and using the lists feature keep track of movies they have watched or would like to watch.  Lists are allowed to be customized so users can make lists for whatever types of movies they like
 
 ### Technology Used
