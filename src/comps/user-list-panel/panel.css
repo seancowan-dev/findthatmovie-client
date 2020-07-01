@@ -7,3 +7,6 @@
 .add-user-list-form-container {
     padding-bottom: 10px;
 }
+.delete-list-button {
+  margin-right: 0!important;
+}

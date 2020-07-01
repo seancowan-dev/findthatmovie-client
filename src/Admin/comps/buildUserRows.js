@@ -8,6 +8,7 @@ export default function buildUserRows(input) {
         <TableCell key={Math.random()}>{user.name}</TableCell>                      
         <TableCell key={Math.random()}>
         <button 
+                className="buttons comment-button"
                 onClick={(e) => {
                 UserStore.adminDeleteUserModalVisibility = true;
                 UserStore.setCurrentlyDeletingUserId(user.id);

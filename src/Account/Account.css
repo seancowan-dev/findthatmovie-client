@@ -1,16 +1,72 @@
-.account-information {
-    background-color: rgb(150, 150, 150);
+  .account-information {
+    width: 100%;
     height: 100vh;
+    min-height: 100vh;
+    background-color: #3F3250;
+    color: #c7c7c7;
+  }
+  .account-information-text-container > h1 {
+    text-align: center;
+  }
+  .account-information-text {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 90px auto;
+    font-size: 14px;
+  }
+
+  .account-information-text > p {
+    background-color: #22252c;
+    border: 1px solid #E14658;
+    padding: 3px;
   }
   
   .account-navigation {
-    background-color: rgb(185, 185, 185);
-    height: 100vh;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    background-color: #2D314F;
+    text-align: center;
+  }
+  .account-navigation > ul {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .account-navigation > ul > li {
+    display: block;
   }
   
   .account-page-container {
-    display: grid;
-    grid-template-columns: 30% 70%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     min-height: 100vh;
     margin-top: 30px;
+  }
+
+  .change-password-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .change-password-form > h3 {
+    text-align: center;
+  }
+
+  .admin-panel {
+    background-color: #3F3250;
+    color: #c7c7c7;
+  }
+
+  .admin-panel > h1 {
+    text-align: center;
+  }
+  .admin-panel > h4 {
+    text-align: center;
   }

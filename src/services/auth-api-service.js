@@ -8,7 +8,7 @@ const AuthApiService = {
         return await fetch(`${config.API_ENDPOINT}/users/login?api_key=f36d54c6-47c9-43de-aa5a-835ae17bdaba`, {
             method: 'POST',
             headers: {
-                'Access-Control-Allow-Origin': 'https://findthatmovie-client.now.sh/',
+                'Access-Control-Allow-Origin': 'http://localhost:3000',
                 'content-type': 'application/json',
             },
             body: JSON.stringify({name, password}),
@@ -46,7 +46,6 @@ const AuthApiService = {
             return res
         })
         .catch(err => {
-            console.log('refresh token request error')
             console.error(err)
         })
     }

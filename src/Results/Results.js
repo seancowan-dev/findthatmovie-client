@@ -76,7 +76,6 @@ const Results = inject('dataStore', 'userStore', 'searchStore', 'helpers')(obser
         <button onClick={(e) => {
             if (props.searchStore.page < props.searchStore.total_pages) {
                 props.searchStore.getMovieList(true).then(res => {
-                    console.log(props.searchStore.page)
                     props.searchStore.searchResults.push(res);
                 })
             }

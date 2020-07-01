@@ -18,11 +18,8 @@ const AdminPage = inject('dataStore', 'userStore', 'helpers')(observer((props) =
     }
     return <>
             <Nav />
-            <div className="container admin-panel">
-            <h1>Administrator Control Panel</h1>
-            <h4>Add/Manage Users</h4>
+            <div className="parallax"></div>
             <AdminPanel />
-            </div>
         </>
 }));
 

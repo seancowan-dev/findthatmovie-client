@@ -143,7 +143,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
                       {reply.rep_user}
                   </div>
                   <div className="posting-date">
-                    {moment(reply.rep_uat).format("MMM Do YYYY")}
+                    {moment(new Date(reply.rep_uat)).format("MMM Do YYYY")}
                   </div>
                 </div>
                   <div className="comment-text"  
@@ -206,7 +206,7 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
               {commentObj.user_name}
             </div>
             <div className='posting-date'>
-              {moment(commentObj.updated_at).format("MMM Do YYYY")}
+              {moment(new Date(commentObj.updated_at)).format("MMM Do YYYY")}
             </div>
           </div>
               <div className='comment-text' 

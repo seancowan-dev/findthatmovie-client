@@ -26,6 +26,7 @@ const AccountPage = inject('dataStore', 'userStore', 'helpers')(observer((props)
     if (props.userStore.userInformation !== null) {
         return <>
         <Nav />
+        <div className="parallax"></div>
         <Account />
     
     </>

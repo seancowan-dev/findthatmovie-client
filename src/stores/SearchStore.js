@@ -259,7 +259,6 @@ class SearchStore {
 
         // If the user has entered query text then we cannot use the discover endpoint
         if (this.searchParams.userQuery !== "") {
-            console.log("why");
             this.noLoad = true;
             queryString = Helpers.encodeQueryParams(Helpers.buildMovieQueryParams(this.page, this.searchParams.userQuery))
             let requestURLKeyword = baseURLKeyword + queryString;
@@ -289,10 +288,9 @@ class SearchStore {
         CommentsService.getMovieComments(UserStore.getCurrentId).then(res => {
             UserStore.setMovieComments(res);
           });    
-        console.log("is it repeating?");
-        // this.displayYouTubeTrailer().then(res => {
-        //     this.setTrailerFragment(res);
-        // });
+        this.displayYouTubeTrailer().then(res => {
+            this.setTrailerFragment(res);
+        });
     }
 }
 

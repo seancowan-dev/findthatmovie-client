@@ -5,6 +5,7 @@ import './UserLists.css';
 import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
 import Panel from '../../comps/user-list-panel/panel';
+import AccNav from '../../comps/account-nav/AccountNav';
 
 let list;
 
@@ -40,7 +41,9 @@ const UserLists = inject('userStore')(observer((props) => {
     list = <Panel list_data={list_data}/>
         return (<>
             <Nav />
-            <div className="list-container">
+            <div className="parallax"></div>
+            <div className="list-container container">
+                <AccNav />
                 <h1>{props.userStore.loginInfo.authenticatedUser + "'s Lists"}</h1>
                 {list}
             </div>

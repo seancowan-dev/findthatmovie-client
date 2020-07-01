@@ -10,6 +10,15 @@ import uuid from 'uuid';
 import $ from 'jquery';
 
 class Helpers {
+
+    checker(pass) {
+        if (pass !== "") {
+            return true;
+        }
+        if (pass === "") {
+            return false;
+        }
+    }
     
     buildDetailedMovieParams() { // Prepare params for detailed movie information queries
         let params = {
@@ -165,33 +174,6 @@ class Helpers {
         targetElement.parentElement.parentElement.nextSibling.children[len - 1].className = otherClasses + " " + newVisibility;
         return;
       }
-    // checkVisibleEdit(targetElement) {
-    //     let currentClass = targetElement.parentElement.nextSibling.className;
-    //     let otherClasses;
-    //     let visibleClass;
-    //     let strPos;
-    //     currentClass.search("inactive") !== -1 ? strPos = currentClass.search("inactive") : strPos = false;
-
-    //     if (strPos !== false) { // inactive is a class name
-    //       otherClasses = currentClass.slice(0, strPos - 1);
-    //       visibleClass = currentClass.slice(strPos, currentClass.length);
-    //     }
-    //     if (strPos === false) {
-    //       currentClass.search("active") !== -1 ? strPos = currentClass.search("active") : strPos = false;
-    //       if (strPos !== false) { // inactive is a class name
-    //         otherClasses = currentClass.slice(0, strPos - 1);
-    //         visibleClass = currentClass.slice(strPos, currentClass.length);
-    //       }
-    //     }
-
-    //     let newVisibility;
-    //     visibleClass === "active" ? newVisibility = "inactive" : newVisibility = "active";
-
-    //     let comment = UserStore.getEditComment
-    //     targetElement.parentElement.nextSibling.children[0].children[0].value = comment.comment;
-    //     targetElement.parentElement.nextSibling.className = otherClasses + " " + newVisibility;
-    //     return;
-    // }
     checkVisibleEditReply(targetElement) {
         let currentClass = targetElement.parentElement.nextSibling.className;
         let otherClasses;

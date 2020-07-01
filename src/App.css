@@ -33,11 +33,24 @@
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   line-height: 18px;
-  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid #E14658;
   border-radius: 10px;
   width: 125px;
   height: 40px;
+}
+
+.MuiExpansionPanelDetails-root {
+  padding: 0;
+}
+
+.MuiTableCell-root {
+  color: #C0B3A0!important;
+}
+
+.MuiTableCell-head {
+  color: #C0B3A0!important;
 }
 
 .buttons:active {
@@ -45,6 +58,29 @@
 }
 .buttons:hover {
   color: #e14658;
+}
+
+.inputs {
+  background-color: #22252c;
+  color: #C0B3A0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #E14658;
+  border-radius: 10px;
+  width: 200px;
+  height: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-bottom: 5px;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+  transition-delay: 3600s;
 }
 
 @media screen and (min-width: 360px) {

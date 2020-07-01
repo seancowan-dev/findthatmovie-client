@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { navigate } from 'hookrouter';
 import { Provider } from "mobx-react";
 import ErrorBound from './comps/ErrorBound';
@@ -28,7 +28,6 @@ window.addEventListener("load", (e) => {
 })
 
 const App = (props) => {
-  const [dummy, reload] = useState(false);
 
   const LogoutFromIdle = () => {
     /* remove the token from localStorage */

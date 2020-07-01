@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Container, ExpansionPanel, ExpansionPanelSummary, FormHelperText, FormControl, ExpansionPanelDetails, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField }  from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -9,7 +10,20 @@ import uuid from 'uuid';
 import ListsService from '../../services/lists-service';
 import './panel.css';
 
+const useStyles = makeStyles((theme) => ({
+    panelContainer: {
+        backgroundColor: "#90849E",
+        color: "#c7c7c7"
+    },
+    tableContainer: {
+        position: "relative",
+        backgroundColor: "#22252c",
+        color: "#c7c7c7"
+    }
+  }));
+
 const Panel = inject('userStore', 'helpers')(observer((props) => {
+    const classes = useStyles();
     async function deleteListItems(id) {
         await ListsService.deleteListItem(id).then(res => {
             props.userStore.toggleListLoaded(false);
@@ -64,7 +78,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                             key={uuid.v4()}
                             id={row.item_id}
                         >
-                    <TableCell 
+                    <TableCell
                         key={uuid.v4()} 
                         component="th" 
                         scope="row"
@@ -95,7 +109,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
             expand_check = handleExpanded(props.userStore.getExpandedHistory, listData.id);
         }
 
-        return <ExpansionPanel key={uuid.v4()} defaultExpanded={expand_check !== undefined ? props.userStore.getExpandedHistory.length > 0 ? expand_check.expanded : false : false}>
+        return <ExpansionPanel className={classes.panelContainer} key={uuid.v4()} defaultExpanded={expand_check !== undefined ? props.userStore.getExpandedHistory.length > 0 ? expand_check.expanded : false : false}>
                     <ExpansionPanelSummary
                         className={"user-list-header"}
                         expandIcon={<ExpandMoreIcon />}
@@ -110,11 +124,11 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                     <Grid container alignItems="flex-start" justify="flex-end" direction="row">
                         <button 
                             id={listData.id}
-                            className="delete-list-button"
+                            className="delete-list-button buttons comment-button"
                             type="submit"
                             onClick={(e) => {
                                 props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
-                                deleteUserList(e.target.parentElement.id); // Delete the user list item
+                                deleteUserList(e.target.id); // Delete the user list item
                                 props.userStore.setListMessageVisibility(); // Show the message box
                                 props.userStore.setListMessage("Successfully deleted list"); // Show a message indicating that the list was deleted
                             }}
@@ -124,7 +138,8 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                     <ExpansionPanelDetails 
                         key={uuid.v4()}
                     >
-                        <TableContainer 
+                        <TableContainer
+                            className={classes.tableContainer} 
                             component={Paper} 
                             key={uuid.v4()}
                         >
@@ -135,7 +150,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                             <TableHead 
                                 key={uuid.v4()}
                             >
-                            <TableRow 
+                            <TableRow
                                 key={uuid.v4()}
                             >
                                 <TableCell 
@@ -183,7 +198,7 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
             </form>
             <Grid className={props.userStore.addUserListToggleButtonVisibility}>
                 <button 
-                    className="toggle-add-list-form-button"
+                    className="toggle-add-list-form-button buttons comment-button"
                     type="submit"
                     onClick={(e) => {
                         props.userStore.setExpandedHistory(logExpanded());
@@ -191,14 +206,13 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                         props.userStore.setUserListInputFormVisibility();
                         props.userStore.setAddUserListToggleButtonVisibility(); // Hide this button
                         props.userStore.setAddUserListButtonVisibility(); // Show the submit button to actually add the list
-                        console.log("I activate the form");
                     }}
                 >Add List
                 </button>
             </Grid>
             <Grid className={props.userStore.addUserListButtonVisibility}>
                 <button 
-                    className="add-list-form-button"
+                    className="add-list-form-button buttons comment-button"
                     type="submit"
                     onClick={(e) => {
                         props.userStore.setExpandedHistory(logExpanded()); // Set the history of expanded elems
@@ -208,7 +222,6 @@ const Panel = inject('userStore', 'helpers')(observer((props) => {
                         props.userStore.setAddUserListToggleButtonVisibility();  // Show the button to bring up the form dialog again
                         props.userStore.setListMessageVisibility(); // Show the message box
                         props.userStore.setListMessage("Successfully added list"); // Show a message indicating that the list was added
-                        console.log("I add lists");
                     }}
                 >Add List
                 </button>

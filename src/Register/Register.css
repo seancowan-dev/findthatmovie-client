@@ -1,5 +1,5 @@
 .create-account-user-info {
-    background-color: rgb(161, 161, 161);
+  background-color: #3F3250;
     height: 100%;
     min-height: 100%;
     display: flex;
@@ -12,6 +12,7 @@
     background-color: rgb(110, 110, 110);
     height: 100%;
     min-height: 100%;
+ 
   }
 
   .MuiInputLabel-root {

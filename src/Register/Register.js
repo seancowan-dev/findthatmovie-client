@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import UserService from '../services/users-service';
-import { Container } from 'semantic-ui-react';
 import { navigate, A } from 'hookrouter';
 import { Message } from 'semantic-ui-react';
 import bcrypt from 'bcryptjs';
@@ -23,7 +22,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                 </Message>
                     <input 
                         placeholder="Enter Username" 
-                        className="username-input register-inputs" 
+                        className="username-input register-inputs inputs" 
                         type="text"
                         value={props.userStore.newRegistrant.username}
                         onClick={(e) => {
@@ -35,7 +34,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                     />
                     <input 
                         placeholder="Enter E-mail" 
-                        className="email-input register-inputs" 
+                        className="email-input register-inputs inputs" 
                         type="text"
                         value={props.userStore.newRegistrant.email}
                         onChange={(e) =>{
@@ -44,7 +43,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                     />
                     <input
                         placeholder="Confirm E-mail" 
-                        className="email-confirm-input register-inputs" 
+                        className="email-confirm-input register-inputs inputs" 
                         type="text"
                         value={props.userStore.newRegistrant.confirmEmail}
                         onChange={(e) =>{
@@ -53,7 +52,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                     />
                     <input 
                         placeholder="Enter Password" 
-                        className="password-input register-inputs" 
+                        className="password-input register-inputs inputs" 
                         type="password"
                         value={props.userStore.newRegistrant.password}
                         onChange={(e) =>{
@@ -62,7 +61,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                     />
                     <input 
                         placeholder="Confirm Password" 
-                        className="password-confirm-input register-inputs" 
+                        className="password-confirm-input register-inputs inputs" 
                         type="password"
                         value={props.userStore.newRegistrant.confirmPassword}
                         onChange={(e) =>{
@@ -71,7 +70,7 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                     />
                     <button  
                     type="submit" 
-                    className="register-submit" 
+                    className="register-submit buttons" 
                     onClick={(e) => {
                         e.preventDefault();
 
@@ -101,27 +100,26 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                                         "perm_level": "user",
                                         "created_at": moment().format()
                                     }
-                                    console.log(JSON.stringify(confirmed));
                                     UserService.addUser(JSON.stringify(confirmed));
                                     navigate("/login");
                                 });
                             }
 
                         } else { // If we reach this point we should list all the errors for the user
-                            console.log(validator_object);
                             props.validators.setRegistrationVisibility(true);
                             let arrayMsgs = [];
                             validator_object.map(item => {
                                 arrayMsgs.push(item.message);
+                                return null;
                             })
                             props.validators.setRegistrationMessage("We detected the following issues with your registration")
                             props.validators.setRegistrationMessageArray(arrayMsgs);
                         }
-                    }}>Create Account</button>
+                    }}>Create</button>
                     <p>Already have an account? <A href="/login">Click here</A></p>
             </fieldset>
         </form>
     </div>
-}));
+})); 
 
 export default Register;

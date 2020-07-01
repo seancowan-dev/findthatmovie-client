@@ -2,6 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Message } from 'semantic-ui-react'; 
 import BuildBaseTable from './comps/buildBaseUserTable';
+import AccNav from '../comps/account-nav/AccountNav';
 import uuid from 'uuid';
 import './AdminPanel.css';
 
@@ -12,8 +13,13 @@ const AdminPanel = inject('userStore', 'helpers')(observer((props) => {
     }
     
     return (<>
-        <Message positive key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.adminPanelMessage.visible)} content={props.userStore.adminPanelMessage.message} />
-        {table}
+        <div className="container admin-panel">
+            <AccNav />
+            <h1>Administrator Control Panel</h1>
+            <h4>Add/Manage Users</h4>
+            <Message positive key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.userStore.adminPanelMessage.visible)} content={props.userStore.adminPanelMessage.message} />
+            {table}
+        </div>
         </>);
 }));
 

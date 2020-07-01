@@ -1,5 +1,4 @@
 import { observable, action, computed } from 'mobx';
-import ValidationError from '../comps/validationErr';
 
 class Validators {
     @observable registration = {
@@ -9,6 +8,22 @@ class Validators {
     @observable login = {
         visible: false,
         message: ""
+    }
+    @observable changePass = {
+        visible: false,
+        message: ""
+    }
+    @computed get getChangePassMessage() {
+        return this.changePass.message;
+    }
+    @computed get getChangePassVisible() {
+        return this.changePass.visible;
+    }
+    @action setChangePassMessage(message) {
+        this.changePass.message = message;
+    }
+    @action setChangePassVisible(visibility) {
+        this.changePass.visible = visibility;
     }
     @observable arrayMsgs = [];
         // Setters
@@ -28,6 +43,11 @@ class Validators {
             this.arrayMsgs = array;
         }
 
+        @observable arrayMsgsPass = [];
+        // Setters       
+        @action setPasswordChangeMessageArray(array) {
+            this.arrayMsgsPass = array;
+        }        
     checkPassword(password, passwordConfirm) {
         let validatorObject;
         let lc = password.match((/[a-z]+/g));
@@ -134,8 +154,6 @@ class Validators {
     }
 
     registrationValidator(inputObject) {
-        let valid = false;
-        let message = "";
         let allErrors = [];
 
         let emailObject = this.checkEmail(inputObject.email, inputObject.emailConfirm);
