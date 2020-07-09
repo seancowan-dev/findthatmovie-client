@@ -116,6 +116,11 @@ const Register = inject('userStore', 'validators', 'helpers')(observer((props) =
                             props.validators.setRegistrationMessageArray(arrayMsgs);
                         }
                     }}>Create</button>
+                    <br />
+                        <h4>Test Account Credentials</h4>
+                        <p>Username: tac</p>
+                        <p>Pssword: Mn!1234567</p>
+                    <br />
                     <p>Already have an account? <A href="/login">Click here</A></p>
             </fieldset>
         </form>

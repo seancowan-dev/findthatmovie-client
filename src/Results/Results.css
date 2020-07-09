@@ -11,6 +11,10 @@
     padding-bottom: 5px;
   }
 
+.results {
+    color: #C0B3A0;
+}
+
 .result-rating-container {
     position: relative;
     content: content;
@@ -77,6 +81,13 @@
     width: 300px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.load-more-button {
+    position: absolute;
+    left: calc(50% - 62.5px);
+    bottom: -50px;
+    margin-bottom: 10px;
 }
 
 @media screen and (min-width: 768px) {

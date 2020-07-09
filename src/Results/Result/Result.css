@@ -22,6 +22,7 @@
       flex-direction: column;
       align-items: center;
       background-color: #2D314F;
+      color: #C0B3A0;
   }
 
   .single-movie-budglength {
@@ -30,6 +31,7 @@
       justify-content: space-evenly;
       align-items: center;
       background-color: #2D314F;
+      color: #C0B3A0;
   }
 
   .single-movie-description {
@@ -38,6 +40,7 @@
 
   .single-movie-header-item {
     background-color: rgb(163, 163, 163);
+    color: #C0B3A0;
   }
 
   .active {

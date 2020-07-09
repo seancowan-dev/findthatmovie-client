@@ -73,16 +73,20 @@ const Results = inject('dataStore', 'userStore', 'searchStore', 'helpers')(obser
 
     return <div className="search-results-container">
         {output}
-        <button onClick={(e) => {
-            if (props.searchStore.page < props.searchStore.total_pages) {
-                props.searchStore.getMovieList(true).then(res => {
-                    props.searchStore.searchResults.push(res);
-                })
-            }
-            else {
-                alert("This temp alert means there is no more")
-            }
-            }}>Load More</button>
+        <button
+            className="buttons load-more-button" 
+            onClick={(e) => {
+                if (props.searchStore.page < props.searchStore.total_pages) {
+                    props.searchStore.getMovieList(true).then(res => {
+                        props.searchStore.searchResults.push(res);
+                    })
+                }
+                else {
+                    alert("This temp alert means there is no more")
+                }
+        }}>
+            Load More
+        </button>
     </div>
 }));
 

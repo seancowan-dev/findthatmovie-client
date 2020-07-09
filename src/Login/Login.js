@@ -37,6 +37,11 @@ const Login = inject('dataStore', 'userStore', 'helpers', 'validators')(observer
                             props.helpers.handleUserLogin();
                             navigate("/");
                     }}>Login</button>
+                <br />
+                    <h4>Test Account Credentials</h4>
+                    <p>Username: tac</p>
+                    <p>Pssword: Mn!1234567</p>
+                <br />
                 <p>Don't have an account? <A href="/register">Click here</A></p>
             </fieldset>
         </form>
