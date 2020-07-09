@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`| Primary Test Object | should render correctly in "debug" mode 1`] = `ShallowWrapper {}`;
+
+exports[`| Primary Test Object | should render correctly in "production" mode 1`] = `ShallowWrapper {}`;
+
 exports[`| Primary View Test Object | should render correctly in "debug" mode 1`] = `ShallowWrapper {}`;

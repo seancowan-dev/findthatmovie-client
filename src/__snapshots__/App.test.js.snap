@@ -2,4 +2,4 @@
 
 exports[`| App Test Object | should render correctly in "debug" mode 1`] = `ShallowWrapper {}`;
 
-exports[`| Primary View Test Object | should render correctly in "debug" mode 1`] = `ShallowWrapper {}`;
+exports[`| App Test Object | should render correctly in "production" mode 1`] = `ShallowWrapper {}`;

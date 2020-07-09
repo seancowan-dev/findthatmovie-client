@@ -53,6 +53,18 @@
   color: #C0B3A0!important;
 }
 
+.MuiInputBase-input {
+  color: #C0B3A0!important;
+}
+
+.MuiFormLabel-root {
+  color: #C0B3A0!important;
+}
+
+.MuiSvgIcon-root {
+  color: #C0B3A0!important;
+}
+
 .buttons:active {
   color: #22252c;
 }

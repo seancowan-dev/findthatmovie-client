@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from "mobx-react";
 import DomainStore from '../../DomainStore';
-import Primary from './Primary';
+import Single from './Single';
 
 const store = {
     dataStore: DomainStore.dataStore,
@@ -12,13 +12,13 @@ const store = {
     validators: DomainStore.validators
   }
 
-describe('| Primary Test Object |', () => {
+describe('| Single Test Object |', () => {
   it('should render correctly in "debug" mode', () => {
-    const component = shallow(<Provider {...store}><Primary debug /></Provider>);
+    const component = shallow(<Provider {...store}><Single debug /></Provider>);
     expect(component).toMatchSnapshot();
   });
   it('should render correctly in "production" mode', () => {
-    const component = shallow(<Provider {...store}><Primary production /></Provider>);
+    const component = shallow(<Provider {...store}><Single production /></Provider>);
     expect(component).toMatchSnapshot();
   });
 });
