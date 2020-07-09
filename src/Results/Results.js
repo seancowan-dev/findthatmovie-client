@@ -63,6 +63,7 @@ const Results = inject('dataStore', 'userStore', 'searchStore', 'helpers')(obser
                                 <div className="result-rating" name={item.title}><p className="result-inner-rating">{item.vote_average + "/10"}</p></div>
                                 <img className="result-poster" src={checkPoster(item.poster_path)} alt={item.title} />
                             </div>
+                            <h3>{item.original_title}</h3>
                         </div>
                         </A>
                     );
