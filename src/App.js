@@ -25,17 +25,16 @@ window.addEventListener("load", (e) => {
   if (!TokenService.hasAuthToken()) { // User has not logged in
     DomainStore.userStore.setValidNavLinks(links.logoutLinks); // Set data using mobx action
   }
-})
+});
 
 const App = (props) => {
-
   const LogoutFromIdle = () => {
     /* remove the token from localStorage */
-    TokenService.clearAuthToken()
+    TokenService.clearAuthToken();
     /* remove any queued calls to the refresh endpoint */
-    TokenService.clearCallbackBeforeExpiry()
+    TokenService.clearCallbackBeforeExpiry();
     /* remove the timeouts that auto logout when idle */
-    IdleService.unregisterIdleResets()
+    IdleService.unregisterIdleResets();
     // /*
     //   react won't know the token has been removed from local storage,
     //   so we need to tell React to rerender
@@ -57,7 +56,7 @@ const App = (props) => {
        if the user doesn't trigger one of these event listeners,
          the idleCallback (logout) will be invoked
      */
-     IdleService.registerIdleTimerResets()
+     IdleService.registerIdleTimerResets();
 
      /*
        Tell the token service to read the JWT, looking at the exp value
@@ -65,7 +64,7 @@ const App = (props) => {
      */
      TokenService.queueCallbackBeforeExpiry(() => {
        /* the timoue will call this callback just before the token expires */
-       AuthApiService.postRefreshToken()
+       AuthApiService.postRefreshToken();
      })
    }
     return function cleanup() {
@@ -73,11 +72,11 @@ const App = (props) => {
       when the app unmounts,
       stop the event listeners that auto logout (clear the token from storage)
     */
-    IdleService.unregisterIdleResets()
+    IdleService.unregisterIdleResets();
     /*
       and remove the refresh endpoint request
     */
-    TokenService.clearCallbackBeforeExpiry()
+    TokenService.clearCallbackBeforeExpiry();
     };
   });
 

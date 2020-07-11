@@ -7,6 +7,7 @@ import { Message } from 'semantic-ui-react';
 import { observer, inject } from 'mobx-react';
 import ListsService from '../../services/lists-service';
 import TokenService from '../../services/token-service';
+import { navigate } from 'hookrouter';
 import uuid from 'uuid';
 import './Result.css';
 
@@ -97,11 +98,9 @@ const Result = inject('searchStore', 'userStore', 'helpers')(observer((props) =>
             </div>
         );
     }
-    return (
-        <div className="error">
-            something went wrong please try searching again
-        </div>
-    )
+    else {
+        navigate("/");
+    }
 
 }));
 

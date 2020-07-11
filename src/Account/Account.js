@@ -12,7 +12,7 @@ import moment from 'moment';
 
 const Account = inject('dataStore', 'userStore', 'helpers', 'validators')(observer((props) => {
 
-    if (UserStore.getAuthenticated === true) {
+    if (UserStore.getAuthenticated === true) { // Only allow access to this page if the user is authenticated and logged in
         return (
             <div className="account-page-container container">
                 <AccNav className="account-navigation"/>
@@ -150,11 +150,19 @@ const Account = inject('dataStore', 'userStore', 'helpers', 'validators')(observ
               </div>
             );
     }
-    if (UserStore.getAuthenticated === false) {
+    if (UserStore.getAuthenticated === false) { // User is not authenticated display a message informing them they should make an account and how to do that
+        props.validators.setChangePassMessage(`Access Denied, please create an account ${<A href="/register">here</A>}`);
+        props.validators.setChangePassVisible(true);
+        setTimeout(() => {
+            props.validators.setChangePassVisible(false);
+        }, 10000)
         return (
             <div className="account-page-container">
                 <section className="account-information">
-                    Access Denied, please create an account <A href="/register">here</A>
+                    <Message key={uuid.v4()} floating className={props.helpers.checkMessageVisible(props.validators.changePass.visible)} warning >
+                        <Message.Header>{props.validators.getChangePassMessage}</Message.Header>
+                        <Message.List items={Array.from(props.validators.arrayMsgsPass)} />
+                    </Message>
                 </section>
               </div>
             );

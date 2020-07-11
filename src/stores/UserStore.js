@@ -63,7 +63,11 @@ class UserStore {
             return this.userInformation.updated_at;
         }
         @computed get getUserPermLevel() {
-            return this.userInformation.perm_level;
+            if (this.userInformation !== null) {
+                return this.userInformation.perm_level;
+            } else {
+                return "not-logged"
+            }
         }
         
     // Lists Page
@@ -304,6 +308,22 @@ class UserStore {
         });
     }
 
+    @action toggleWelcomeModal(trig) {
+        if (trig === true) {
+            document.querySelector('.welcome-modal').classList.remove("offscreen");
+            document.querySelector('.welcome-modal').classList.add("onscreen");
+        }
+        if (trig === false) {
+            document.querySelector('.welcome-modal').classList.remove("onscreen");
+            document.querySelector('.welcome-modal').classList.add("offscreen");
+        }
+        if (trig === "hidden") {
+            document.querySelector('.welcome-modal').classList.remove("onscreen");
+            document.querySelector('.welcome-modal').classList.remove("offscreen");
+            document.querySelector('.welcome-modal').classList.add("inactive");
+        }
+        window.localStorage.setItem('findthatmovie-modal-token', true);
+    }
     // Actions for movies
         // Getters
         @computed get getCurrentId() {

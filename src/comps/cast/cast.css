@@ -8,7 +8,9 @@
 
   .movie-cast-container > p {
     padding: 5px;
-    line-height: 54px;
+    line-height: 45px;
+    height: 90px;
+    max-height: 90px;
     vertical-align: middle;
   }
   

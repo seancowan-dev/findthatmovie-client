@@ -95,9 +95,6 @@ const Comments = inject('dataStore', 'searchStore', 'userStore', 'helpers')(obse
     }
     const editReplyComment = (target_for_id, base_target, target_for_class, comment = false) => { // Validation for editing replies or comments
       // Comment is false for replies and true for comments
-      console.log(target_for_id);
-      console.log(base_target);
-      console.log(target_for_class);
       let id = target_for_id.id
       props.helpers.checkUserPerms(id).then(res => {
         if (res.userStatus === "allowed") { // If they are allowed

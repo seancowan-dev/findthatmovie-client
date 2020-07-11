@@ -25,8 +25,6 @@ const Form = inject('dataStore', 'userStore')(observer((props) => {
                     "reply" : false,
                     "updated_at": new Date(date).toISOString()
                 }
-                console.log(comment);
-                // arr.push(comment);
 
                 runInAction(() => CommentsService.addComment(comment));
 

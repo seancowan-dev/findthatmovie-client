@@ -95,6 +95,28 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
   transition-delay: 3600s;
 }
 
+.access-denied-container {
+  max-width: 400px!important;
+  height: 250px;
+  background-color: #3F3250;
+  color: #c7c7c7;
+}
+
+.access-denied-text {
+  max-width: 400px!important;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.access-denied-text > h1 {
+  text-align: center;
+}
+
 @media screen and (min-width: 360px) {
   .parallax {
     height: 42vh;

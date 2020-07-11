@@ -10,7 +10,7 @@ const AdminPage = inject('dataStore', 'userStore', 'helpers')(observer((props) =
             props.userStore.setAdminUserList(users);
         });
     }
-    if (props.userStore.loginInfo.authenticated === false) {
+    if (props.userStore.getAuthenticated === false) {
         // put code here to redirect to the unauthorized page
     }
     if (props.userStore.adminUserList === null) {
