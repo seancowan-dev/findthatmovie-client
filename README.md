@@ -1,5 +1,6 @@
 # Findthatmovie (React) [Client]
 Access the site here: https://findthatmovie-client.now.sh/
+This is the client to see the source for the API go here: https://github.com/seancowan-dev/findthatmovie-api
 
 Screenshot: https://pasteboard.co/Jfz65U0.png
 
@@ -16,8 +17,6 @@ We've all gone through the same process when trying to find a new movie to eithe
 To solve that I made Findthatmovie.  Now you can keep a list of movies you've watched, or want to watch, and find trailers all in one place.  Future versions will also provide links directly to 3rd party streaming services to further expedite the time it takes from wanting to watch to actually watching.
 
 ## API
-
-The source code for the API can be found here: https://github.com/seancowan-dev/findthatmovie-api
 
 The API is running here: https://secure-inlet-58346.herokuapp.com/
 
